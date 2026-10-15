@@ -1,0 +1,1698 @@
+# TYPE blobpool_add_gapped gauge
+blobpool_add_gapped 0
+
+# TYPE blobpool_add_invalid gauge
+blobpool_add_invalid 0
+
+# TYPE blobpool_add_nonexclusive gauge
+blobpool_add_nonexclusive 0
+
+# TYPE blobpool_add_noreplace gauge
+blobpool_add_noreplace 0
+
+# TYPE blobpool_add_overcapped gauge
+blobpool_add_overcapped 0
+
+# TYPE blobpool_add_overdrafted gauge
+blobpool_add_overdrafted 0
+
+# TYPE blobpool_add_stale gauge
+blobpool_add_stale 0
+
+# TYPE blobpool_add_underpriced gauge
+blobpool_add_underpriced 0
+
+# TYPE blobpool_add_valid gauge
+blobpool_add_valid 0
+
+# TYPE blobpool_addtime_count counter
+blobpool_addtime_count 0
+
+# TYPE blobpool_addtime summary
+blobpool_addtime {quantile="0.5"} 0
+blobpool_addtime {quantile="0.75"} 0
+blobpool_addtime {quantile="0.95"} 0
+blobpool_addtime {quantile="0.99"} 0
+blobpool_addtime {quantile="0.999"} 0
+blobpool_addtime {quantile="0.9999"} 0
+
+# TYPE blobpool_addwait_count counter
+blobpool_addwait_count 0
+
+# TYPE blobpool_addwait summary
+blobpool_addwait {quantile="0.5"} 0
+blobpool_addwait {quantile="0.75"} 0
+blobpool_addwait {quantile="0.95"} 0
+blobpool_addwait {quantile="0.99"} 0
+blobpool_addwait {quantile="0.999"} 0
+blobpool_addwait {quantile="0.9999"} 0
+
+# TYPE blobpool_basefee gauge
+blobpool_basefee 0
+
+# TYPE blobpool_blobfee gauge
+blobpool_blobfee 0
+
+# TYPE blobpool_datacap gauge
+blobpool_datacap 0
+
+# TYPE blobpool_datareal gauge
+blobpool_datareal 0
+
+# TYPE blobpool_dataused gauge
+blobpool_dataused 0
+
+# TYPE blobpool_drop_dangling gauge
+blobpool_drop_dangling 0
+
+# TYPE blobpool_drop_filled gauge
+blobpool_drop_filled 0
+
+# TYPE blobpool_drop_gapped gauge
+blobpool_drop_gapped 0
+
+# TYPE blobpool_drop_invalid gauge
+blobpool_drop_invalid 0
+
+# TYPE blobpool_drop_overcapped gauge
+blobpool_drop_overcapped 0
+
+# TYPE blobpool_drop_overdrafted gauge
+blobpool_drop_overdrafted 0
+
+# TYPE blobpool_drop_overflown gauge
+blobpool_drop_overflown 0
+
+# TYPE blobpool_drop_overlapped gauge
+blobpool_drop_overlapped 0
+
+# TYPE blobpool_drop_repeated gauge
+blobpool_drop_repeated 0
+
+# TYPE blobpool_drop_replaced gauge
+blobpool_drop_replaced 0
+
+# TYPE blobpool_drop_underpriced gauge
+blobpool_drop_underpriced 0
+
+# TYPE blobpool_gettime_count counter
+blobpool_gettime_count 0
+
+# TYPE blobpool_gettime summary
+blobpool_gettime {quantile="0.5"} 0
+blobpool_gettime {quantile="0.75"} 0
+blobpool_gettime {quantile="0.95"} 0
+blobpool_gettime {quantile="0.99"} 0
+blobpool_gettime {quantile="0.999"} 0
+blobpool_gettime {quantile="0.9999"} 0
+
+# TYPE blobpool_getwait_count counter
+blobpool_getwait_count 0
+
+# TYPE blobpool_getwait summary
+blobpool_getwait {quantile="0.5"} 0
+blobpool_getwait {quantile="0.75"} 0
+blobpool_getwait {quantile="0.95"} 0
+blobpool_getwait {quantile="0.99"} 0
+blobpool_getwait {quantile="0.999"} 0
+blobpool_getwait {quantile="0.9999"} 0
+
+# TYPE blobpool_limbo_datareal gauge
+blobpool_limbo_datareal 0
+
+# TYPE blobpool_limbo_dataused gauge
+blobpool_limbo_dataused 0
+
+# TYPE blobpool_limbo_slotused gauge
+blobpool_limbo_slotused 0
+
+# TYPE blobpool_oversized_datagaps gauge
+blobpool_oversized_datagaps 0
+
+# TYPE blobpool_oversized_dataused gauge
+blobpool_oversized_dataused 0
+
+# TYPE blobpool_oversized_slotgaps gauge
+blobpool_oversized_slotgaps 0
+
+# TYPE blobpool_oversized_slotused gauge
+blobpool_oversized_slotused 0
+
+# TYPE blobpool_pendtime_count counter
+blobpool_pendtime_count 0
+
+# TYPE blobpool_pendtime summary
+blobpool_pendtime {quantile="0.5"} 0
+blobpool_pendtime {quantile="0.75"} 0
+blobpool_pendtime {quantile="0.95"} 0
+blobpool_pendtime {quantile="0.99"} 0
+blobpool_pendtime {quantile="0.999"} 0
+blobpool_pendtime {quantile="0.9999"} 0
+
+# TYPE blobpool_pendwait_count counter
+blobpool_pendwait_count 0
+
+# TYPE blobpool_pendwait summary
+blobpool_pendwait {quantile="0.5"} 0
+blobpool_pendwait {quantile="0.75"} 0
+blobpool_pendwait {quantile="0.95"} 0
+blobpool_pendwait {quantile="0.99"} 0
+blobpool_pendwait {quantile="0.999"} 0
+blobpool_pendwait {quantile="0.9999"} 0
+
+# TYPE blobpool_pooltip gauge
+blobpool_pooltip 0
+
+# TYPE blobpool_resettime_count counter
+blobpool_resettime_count 0
+
+# TYPE blobpool_resettime summary
+blobpool_resettime {quantile="0.5"} 0
+blobpool_resettime {quantile="0.75"} 0
+blobpool_resettime {quantile="0.95"} 0
+blobpool_resettime {quantile="0.99"} 0
+blobpool_resettime {quantile="0.999"} 0
+blobpool_resettime {quantile="0.9999"} 0
+
+# TYPE blobpool_resetwait_count counter
+blobpool_resetwait_count 0
+
+# TYPE blobpool_resetwait summary
+blobpool_resetwait {quantile="0.5"} 0
+blobpool_resetwait {quantile="0.75"} 0
+blobpool_resetwait {quantile="0.95"} 0
+blobpool_resetwait {quantile="0.99"} 0
+blobpool_resetwait {quantile="0.999"} 0
+blobpool_resetwait {quantile="0.9999"} 0
+
+# TYPE blobpool_slotused gauge
+blobpool_slotused 0
+
+# TYPE chain_account_commits_count counter
+chain_account_commits_count 1
+
+# TYPE chain_account_commits summary
+chain_account_commits {quantile="0.5"} 301996
+chain_account_commits {quantile="0.75"} 301996
+chain_account_commits {quantile="0.95"} 301996
+chain_account_commits {quantile="0.99"} 301996
+chain_account_commits {quantile="0.999"} 301996
+chain_account_commits {quantile="0.9999"} 301996
+
+# TYPE chain_account_hashes_count counter
+chain_account_hashes_count 1
+
+# TYPE chain_account_hashes summary
+chain_account_hashes {quantile="0.5"} 230017
+chain_account_hashes {quantile="0.75"} 230017
+chain_account_hashes {quantile="0.95"} 230017
+chain_account_hashes {quantile="0.99"} 230017
+chain_account_hashes {quantile="0.999"} 230017
+chain_account_hashes {quantile="0.9999"} 230017
+
+# TYPE chain_account_reads_count counter
+chain_account_reads_count 1
+
+# TYPE chain_account_reads summary
+chain_account_reads {quantile="0.5"} 91272
+chain_account_reads {quantile="0.75"} 91272
+chain_account_reads {quantile="0.95"} 91272
+chain_account_reads {quantile="0.99"} 91272
+chain_account_reads {quantile="0.999"} 91272
+chain_account_reads {quantile="0.9999"} 91272
+
+# TYPE chain_account_single_reads_count counter
+chain_account_single_reads_count 1
+
+# TYPE chain_account_single_reads summary
+chain_account_single_reads {quantile="0.5"} 7020
+chain_account_single_reads {quantile="0.75"} 7020
+chain_account_single_reads {quantile="0.95"} 7020
+chain_account_single_reads {quantile="0.99"} 7020
+chain_account_single_reads {quantile="0.999"} 7020
+chain_account_single_reads {quantile="0.9999"} 7020
+
+# TYPE chain_account_updates_count counter
+chain_account_updates_count 1
+
+# TYPE chain_account_updates summary
+chain_account_updates {quantile="0.5"} 727194
+chain_account_updates {quantile="0.75"} 727194
+chain_account_updates {quantile="0.95"} 727194
+chain_account_updates {quantile="0.99"} 727194
+chain_account_updates {quantile="0.999"} 727194
+chain_account_updates {quantile="0.9999"} 727194
+
+# TYPE chain_crossvalidation_count counter
+chain_crossvalidation_count 1
+
+# TYPE chain_crossvalidation summary
+chain_crossvalidation {quantile="0.5"} 467
+chain_crossvalidation {quantile="0.75"} 467
+chain_crossvalidation {quantile="0.95"} 467
+chain_crossvalidation {quantile="0.99"} 467
+chain_crossvalidation {quantile="0.999"} 467
+chain_crossvalidation {quantile="0.9999"} 467
+
+# TYPE chain_execution_count counter
+chain_execution_count 1
+
+# TYPE chain_execution summary
+chain_execution {quantile="0.5"} 360732
+chain_execution {quantile="0.75"} 360732
+chain_execution {quantile="0.95"} 360732
+chain_execution {quantile="0.99"} 360732
+chain_execution {quantile="0.999"} 360732
+chain_execution {quantile="0.9999"} 360732
+
+# TYPE chain_head_block gauge
+chain_head_block 24653
+
+# TYPE chain_head_finalized gauge
+chain_head_finalized 0
+
+# TYPE chain_head_header gauge
+chain_head_header 24653
+
+# TYPE chain_head_receipt gauge
+chain_head_receipt 24653
+
+# TYPE chain_head_safe gauge
+chain_head_safe 24642
+
+# TYPE chain_info gauge
+chain_info {chain_id="13"} 1
+
+# TYPE chain_inserts_count counter
+chain_inserts_count 1
+
+# TYPE chain_inserts summary
+chain_inserts {quantile="0.5"} 5.236787e+06
+chain_inserts {quantile="0.75"} 5.236787e+06
+chain_inserts {quantile="0.95"} 5.236787e+06
+chain_inserts {quantile="0.99"} 5.236787e+06
+chain_inserts {quantile="0.999"} 5.236787e+06
+chain_inserts {quantile="0.9999"} 5.236787e+06
+
+# TYPE chain_prefetch_executes_count counter
+chain_prefetch_executes_count 0
+
+# TYPE chain_prefetch_executes summary
+chain_prefetch_executes {quantile="0.5"} 0
+chain_prefetch_executes {quantile="0.75"} 0
+chain_prefetch_executes {quantile="0.95"} 0
+chain_prefetch_executes {quantile="0.99"} 0
+chain_prefetch_executes {quantile="0.999"} 0
+chain_prefetch_executes {quantile="0.9999"} 0
+
+# TYPE chain_prefetch_interrupts gauge
+chain_prefetch_interrupts 0
+
+# TYPE chain_reorg_add gauge
+chain_reorg_add 0
+
+# TYPE chain_reorg_drop gauge
+chain_reorg_drop 0
+
+# TYPE chain_reorg_executes gauge
+chain_reorg_executes 0
+
+# TYPE chain_snapshot_commits_count counter
+chain_snapshot_commits_count 1
+
+# TYPE chain_snapshot_commits summary
+chain_snapshot_commits {quantile="0.5"} 316594
+chain_snapshot_commits {quantile="0.75"} 316594
+chain_snapshot_commits {quantile="0.95"} 316594
+chain_snapshot_commits {quantile="0.99"} 316594
+chain_snapshot_commits {quantile="0.999"} 316594
+chain_snapshot_commits {quantile="0.9999"} 316594
+
+# TYPE chain_storage_commits_count counter
+chain_storage_commits_count 1
+
+# TYPE chain_storage_commits summary
+chain_storage_commits {quantile="0.5"} 412267
+chain_storage_commits {quantile="0.75"} 412267
+chain_storage_commits {quantile="0.95"} 412267
+chain_storage_commits {quantile="0.99"} 412267
+chain_storage_commits {quantile="0.999"} 412267
+chain_storage_commits {quantile="0.9999"} 412267
+
+# TYPE chain_storage_reads_count counter
+chain_storage_reads_count 1
+
+# TYPE chain_storage_reads summary
+chain_storage_reads {quantile="0.5"} 99906
+chain_storage_reads {quantile="0.75"} 99906
+chain_storage_reads {quantile="0.95"} 99906
+chain_storage_reads {quantile="0.99"} 99906
+chain_storage_reads {quantile="0.999"} 99906
+chain_storage_reads {quantile="0.9999"} 99906
+
+# TYPE chain_storage_single_reads_count counter
+chain_storage_single_reads_count 1
+
+# TYPE chain_storage_single_reads summary
+chain_storage_single_reads {quantile="0.5"} 9082
+chain_storage_single_reads {quantile="0.75"} 9082
+chain_storage_single_reads {quantile="0.95"} 9082
+chain_storage_single_reads {quantile="0.99"} 9082
+chain_storage_single_reads {quantile="0.999"} 9082
+chain_storage_single_reads {quantile="0.9999"} 9082
+
+# TYPE chain_storage_updates_count counter
+chain_storage_updates_count 1
+
+# TYPE chain_storage_updates summary
+chain_storage_updates {quantile="0.5"} 1.24532e+06
+chain_storage_updates {quantile="0.75"} 1.24532e+06
+chain_storage_updates {quantile="0.95"} 1.24532e+06
+chain_storage_updates {quantile="0.99"} 1.24532e+06
+chain_storage_updates {quantile="0.999"} 1.24532e+06
+chain_storage_updates {quantile="0.9999"} 1.24532e+06
+
+# TYPE chain_triedb_commits_count counter
+chain_triedb_commits_count 1
+
+# TYPE chain_triedb_commits summary
+chain_triedb_commits {quantile="0.5"} 213964
+chain_triedb_commits {quantile="0.75"} 213964
+chain_triedb_commits {quantile="0.95"} 213964
+chain_triedb_commits {quantile="0.99"} 213964
+chain_triedb_commits {quantile="0.999"} 213964
+chain_triedb_commits {quantile="0.9999"} 213964
+
+# TYPE chain_validation_count counter
+chain_validation_count 1
+
+# TYPE chain_validation summary
+chain_validation {quantile="0.5"} 74861
+chain_validation {quantile="0.75"} 74861
+chain_validation {quantile="0.95"} 74861
+chain_validation {quantile="0.99"} 74861
+chain_validation {quantile="0.999"} 74861
+chain_validation {quantile="0.9999"} 74861
+
+# TYPE chain_write_count counter
+chain_write_count 1
+
+# TYPE chain_write summary
+chain_write {quantile="0.5"} 1.366303e+06
+chain_write {quantile="0.75"} 1.366303e+06
+chain_write {quantile="0.95"} 1.366303e+06
+chain_write {quantile="0.99"} 1.366303e+06
+chain_write {quantile="0.999"} 1.366303e+06
+chain_write {quantile="0.9999"} 1.366303e+06
+
+# TYPE db_preimage_hits gauge
+db_preimage_hits 224698
+
+# TYPE db_preimage_total gauge
+db_preimage_total 224698
+
+# TYPE discover_bucket_0_count gauge
+discover_bucket_0_count 0
+
+# TYPE discover_bucket_1_count gauge
+discover_bucket_1_count 0
+
+# TYPE discover_bucket_10_count gauge
+discover_bucket_10_count 0
+
+# TYPE discover_bucket_11_count gauge
+discover_bucket_11_count 0
+
+# TYPE discover_bucket_12_count gauge
+discover_bucket_12_count 0
+
+# TYPE discover_bucket_13_count gauge
+discover_bucket_13_count 0
+
+# TYPE discover_bucket_14_count gauge
+discover_bucket_14_count 0
+
+# TYPE discover_bucket_15_count gauge
+discover_bucket_15_count 0
+
+# TYPE discover_bucket_16_count gauge
+discover_bucket_16_count 0
+
+# TYPE discover_bucket_2_count gauge
+discover_bucket_2_count 0
+
+# TYPE discover_bucket_3_count gauge
+discover_bucket_3_count 0
+
+# TYPE discover_bucket_4_count gauge
+discover_bucket_4_count 0
+
+# TYPE discover_bucket_5_count gauge
+discover_bucket_5_count 0
+
+# TYPE discover_bucket_6_count gauge
+discover_bucket_6_count 0
+
+# TYPE discover_bucket_7_count gauge
+discover_bucket_7_count 0
+
+# TYPE discover_bucket_8_count gauge
+discover_bucket_8_count 0
+
+# TYPE discover_bucket_9_count gauge
+discover_bucket_9_count 0
+
+# TYPE discover_egress gauge
+discover_egress 0
+
+# TYPE discover_ingress gauge
+discover_ingress 0
+
+# TYPE eth_db_chaindata_ancient_read gauge
+eth_db_chaindata_ancient_read 0
+
+# TYPE eth_db_chaindata_ancient_size gauge
+eth_db_chaindata_ancient_size 24
+
+# TYPE eth_db_chaindata_ancient_write gauge
+eth_db_chaindata_ancient_write 0
+
+# TYPE eth_db_chaindata_compact_input gauge
+eth_db_chaindata_compact_input 344406649
+
+# TYPE eth_db_chaindata_compact_level0 gauge
+eth_db_chaindata_compact_level0 4
+
+# TYPE eth_db_chaindata_compact_memory gauge
+eth_db_chaindata_compact_memory 3
+
+# TYPE eth_db_chaindata_compact_nonlevel0 gauge
+eth_db_chaindata_compact_nonlevel0 2
+
+# TYPE eth_db_chaindata_compact_output gauge
+eth_db_chaindata_compact_output 341667701
+
+# TYPE eth_db_chaindata_compact_seek gauge
+eth_db_chaindata_compact_seek 0
+
+# TYPE eth_db_chaindata_compact_time gauge
+eth_db_chaindata_compact_time 6903812168
+
+# TYPE eth_db_chaindata_compact_writedelay_counter gauge
+eth_db_chaindata_compact_writedelay_counter 0
+
+# TYPE eth_db_chaindata_compact_writedelay_duration gauge
+eth_db_chaindata_compact_writedelay_duration 0
+
+# TYPE eth_db_chaindata_disk_read gauge
+eth_db_chaindata_disk_read 0
+
+# TYPE eth_db_chaindata_disk_size gauge
+eth_db_chaindata_disk_size 616376774
+
+# TYPE eth_db_chaindata_disk_write gauge
+eth_db_chaindata_disk_write 1074957271
+
+# TYPE eth_db_chaindata_memory_manualalloc gauge
+eth_db_chaindata_memory_manualalloc 388318999
+
+# TYPE eth_db_chaindata_tables_level0 gauge
+eth_db_chaindata_tables_level0 31
+
+# TYPE eth_db_chaindata_tables_level1 gauge
+eth_db_chaindata_tables_level1 0
+
+# TYPE eth_db_chaindata_tables_level2 gauge
+eth_db_chaindata_tables_level2 0
+
+# TYPE eth_db_chaindata_tables_level3 gauge
+eth_db_chaindata_tables_level3 0
+
+# TYPE eth_db_chaindata_tables_level4 gauge
+eth_db_chaindata_tables_level4 0
+
+# TYPE eth_db_chaindata_tables_level5 gauge
+eth_db_chaindata_tables_level5 4
+
+# TYPE eth_db_chaindata_tables_level6 gauge
+eth_db_chaindata_tables_level6 21
+
+# TYPE eth_downloader_bodies_drop gauge
+eth_downloader_bodies_drop 0
+
+# TYPE eth_downloader_bodies_in gauge
+eth_downloader_bodies_in 0
+
+# TYPE eth_downloader_bodies_req_count counter
+eth_downloader_bodies_req_count 0
+
+# TYPE eth_downloader_bodies_req summary
+eth_downloader_bodies_req {quantile="0.5"} 0
+eth_downloader_bodies_req {quantile="0.75"} 0
+eth_downloader_bodies_req {quantile="0.95"} 0
+eth_downloader_bodies_req {quantile="0.99"} 0
+eth_downloader_bodies_req {quantile="0.999"} 0
+eth_downloader_bodies_req {quantile="0.9999"} 0
+
+# TYPE eth_downloader_bodies_timeout gauge
+eth_downloader_bodies_timeout 0
+
+# TYPE eth_downloader_headers_drop gauge
+eth_downloader_headers_drop 0
+
+# TYPE eth_downloader_headers_in gauge
+eth_downloader_headers_in 0
+
+# TYPE eth_downloader_headers_req_count counter
+eth_downloader_headers_req_count 0
+
+# TYPE eth_downloader_headers_req summary
+eth_downloader_headers_req {quantile="0.5"} 0
+eth_downloader_headers_req {quantile="0.75"} 0
+eth_downloader_headers_req {quantile="0.95"} 0
+eth_downloader_headers_req {quantile="0.99"} 0
+eth_downloader_headers_req {quantile="0.999"} 0
+eth_downloader_headers_req {quantile="0.9999"} 0
+
+# TYPE eth_downloader_headers_timeout gauge
+eth_downloader_headers_timeout 0
+
+# TYPE eth_downloader_receipts_drop gauge
+eth_downloader_receipts_drop 0
+
+# TYPE eth_downloader_receipts_in gauge
+eth_downloader_receipts_in 0
+
+# TYPE eth_downloader_receipts_req_count counter
+eth_downloader_receipts_req_count 0
+
+# TYPE eth_downloader_receipts_req summary
+eth_downloader_receipts_req {quantile="0.5"} 0
+eth_downloader_receipts_req {quantile="0.75"} 0
+eth_downloader_receipts_req {quantile="0.95"} 0
+eth_downloader_receipts_req {quantile="0.99"} 0
+eth_downloader_receipts_req {quantile="0.999"} 0
+eth_downloader_receipts_req {quantile="0.9999"} 0
+
+# TYPE eth_downloader_receipts_timeout gauge
+eth_downloader_receipts_timeout 0
+
+# TYPE eth_downloader_throttle gauge
+eth_downloader_throttle 0
+
+# TYPE eth_fetcher_transaction_announces_dos gauge
+eth_fetcher_transaction_announces_dos 0
+
+# TYPE eth_fetcher_transaction_announces_in gauge
+eth_fetcher_transaction_announces_in 0
+
+# TYPE eth_fetcher_transaction_announces_known gauge
+eth_fetcher_transaction_announces_known 0
+
+# TYPE eth_fetcher_transaction_announces_underpriced gauge
+eth_fetcher_transaction_announces_underpriced 0
+
+# TYPE eth_fetcher_transaction_broadcasts_in gauge
+eth_fetcher_transaction_broadcasts_in 0
+
+# TYPE eth_fetcher_transaction_broadcasts_known gauge
+eth_fetcher_transaction_broadcasts_known 0
+
+# TYPE eth_fetcher_transaction_broadcasts_otherreject gauge
+eth_fetcher_transaction_broadcasts_otherreject 0
+
+# TYPE eth_fetcher_transaction_broadcasts_underpriced gauge
+eth_fetcher_transaction_broadcasts_underpriced 0
+
+# TYPE eth_fetcher_transaction_fetching_hashes gauge
+eth_fetcher_transaction_fetching_hashes 0
+
+# TYPE eth_fetcher_transaction_fetching_peers gauge
+eth_fetcher_transaction_fetching_peers 0
+
+# TYPE eth_fetcher_transaction_queueing_hashes gauge
+eth_fetcher_transaction_queueing_hashes 0
+
+# TYPE eth_fetcher_transaction_queueing_peers gauge
+eth_fetcher_transaction_queueing_peers 0
+
+# TYPE eth_fetcher_transaction_replies_in gauge
+eth_fetcher_transaction_replies_in 0
+
+# TYPE eth_fetcher_transaction_replies_known gauge
+eth_fetcher_transaction_replies_known 0
+
+# TYPE eth_fetcher_transaction_replies_otherreject gauge
+eth_fetcher_transaction_replies_otherreject 0
+
+# TYPE eth_fetcher_transaction_replies_underpriced gauge
+eth_fetcher_transaction_replies_underpriced 0
+
+# TYPE eth_fetcher_transaction_request_done gauge
+eth_fetcher_transaction_request_done 0
+
+# TYPE eth_fetcher_transaction_request_fail gauge
+eth_fetcher_transaction_request_fail 0
+
+# TYPE eth_fetcher_transaction_request_out gauge
+eth_fetcher_transaction_request_out 0
+
+# TYPE eth_fetcher_transaction_request_timeout gauge
+eth_fetcher_transaction_request_timeout 0
+
+# TYPE eth_fetcher_transaction_waiting_hashes gauge
+eth_fetcher_transaction_waiting_hashes 0
+
+# TYPE eth_fetcher_transaction_waiting_peers gauge
+eth_fetcher_transaction_waiting_peers 0
+
+# TYPE eth_protocols_eth_egress_handshake_error_forkid gauge
+eth_protocols_eth_egress_handshake_error_forkid 0
+
+# TYPE eth_protocols_eth_egress_handshake_error_genesis gauge
+eth_protocols_eth_egress_handshake_error_genesis 0
+
+# TYPE eth_protocols_eth_egress_handshake_error_network gauge
+eth_protocols_eth_egress_handshake_error_network 0
+
+# TYPE eth_protocols_eth_egress_handshake_error_peer gauge
+eth_protocols_eth_egress_handshake_error_peer 0
+
+# TYPE eth_protocols_eth_egress_handshake_error_timeout gauge
+eth_protocols_eth_egress_handshake_error_timeout 0
+
+# TYPE eth_protocols_eth_egress_handshake_error_version gauge
+eth_protocols_eth_egress_handshake_error_version 0
+
+# TYPE eth_protocols_eth_ingress_handshake_error_forkid gauge
+eth_protocols_eth_ingress_handshake_error_forkid 0
+
+# TYPE eth_protocols_eth_ingress_handshake_error_genesis gauge
+eth_protocols_eth_ingress_handshake_error_genesis 0
+
+# TYPE eth_protocols_eth_ingress_handshake_error_network gauge
+eth_protocols_eth_ingress_handshake_error_network 0
+
+# TYPE eth_protocols_eth_ingress_handshake_error_peer gauge
+eth_protocols_eth_ingress_handshake_error_peer 0
+
+# TYPE eth_protocols_eth_ingress_handshake_error_timeout gauge
+eth_protocols_eth_ingress_handshake_error_timeout 0
+
+# TYPE eth_protocols_eth_ingress_handshake_error_version gauge
+eth_protocols_eth_ingress_handshake_error_version 0
+
+# TYPE eth_protocols_snap_egress_registration_error gauge
+eth_protocols_snap_egress_registration_error 0
+
+# TYPE eth_protocols_snap_ingress_registration_error gauge
+eth_protocols_snap_ingress_registration_error 0
+
+# TYPE eth_protocols_snap_sync_account_lookup_inner gauge
+eth_protocols_snap_sync_account_lookup_inner 0
+
+# TYPE eth_protocols_snap_sync_account_lookup_outer gauge
+eth_protocols_snap_sync_account_lookup_outer 0
+
+# TYPE eth_protocols_snap_sync_delete_account_inner gauge
+eth_protocols_snap_sync_delete_account_inner 0
+
+# TYPE eth_protocols_snap_sync_delete_account_outer gauge
+eth_protocols_snap_sync_delete_account_outer 0
+
+# TYPE eth_protocols_snap_sync_delete_storage_inner gauge
+eth_protocols_snap_sync_delete_storage_inner 0
+
+# TYPE eth_protocols_snap_sync_delete_storage_outer gauge
+eth_protocols_snap_sync_delete_storage_outer 0
+
+# TYPE eth_protocols_snap_sync_storage_chunk_discard gauge
+eth_protocols_snap_sync_storage_chunk_discard 0
+
+# TYPE eth_protocols_snap_sync_storage_chunk_resume gauge
+eth_protocols_snap_sync_storage_chunk_resume 0
+
+# TYPE eth_protocols_snap_sync_storage_large gauge
+eth_protocols_snap_sync_storage_large 0
+
+# TYPE eth_protocols_snap_sync_storage_lookup_inner gauge
+eth_protocols_snap_sync_storage_lookup_inner 0
+
+# TYPE eth_protocols_snap_sync_storage_lookup_outer gauge
+eth_protocols_snap_sync_storage_lookup_outer 0
+
+# TYPE eth_protocols_snap_sync_storage_noheal gauge
+eth_protocols_snap_sync_storage_noheal 0
+
+# TYPE eth_protocols_snap_sync_storage_small gauge
+eth_protocols_snap_sync_storage_small 0
+
+# TYPE geth_info gauge
+geth_info {arch="amd64", os="linux", protocols="eth/68,snap/1", version="1.101503.2-rc.5-37be9e05-20250401"} 1
+
+# TYPE hashdb_memcache_clean_hit gauge
+hashdb_memcache_clean_hit 3687021
+
+# TYPE hashdb_memcache_clean_miss gauge
+hashdb_memcache_clean_miss 3159
+
+# TYPE hashdb_memcache_clean_read gauge
+hashdb_memcache_clean_read 1169547613
+
+# TYPE hashdb_memcache_clean_write gauge
+hashdb_memcache_clean_write 226764252
+
+# TYPE hashdb_memcache_commit_bytes gauge
+hashdb_memcache_commit_bytes 252568648
+
+# TYPE hashdb_memcache_commit_nodes gauge
+hashdb_memcache_commit_nodes 817840
+
+# TYPE hashdb_memcache_commit_time_count counter
+hashdb_memcache_commit_time_count 1
+
+# TYPE hashdb_memcache_commit_time summary
+hashdb_memcache_commit_time {quantile="0.5"} 733474
+hashdb_memcache_commit_time {quantile="0.75"} 733474
+hashdb_memcache_commit_time {quantile="0.95"} 733474
+hashdb_memcache_commit_time {quantile="0.99"} 733474
+hashdb_memcache_commit_time {quantile="0.999"} 733474
+hashdb_memcache_commit_time {quantile="0.9999"} 733474
+
+# TYPE hashdb_memcache_dirty_hit gauge
+hashdb_memcache_dirty_hit 49306
+
+# TYPE hashdb_memcache_dirty_miss gauge
+hashdb_memcache_dirty_miss 3159
+
+# TYPE hashdb_memcache_dirty_read gauge
+hashdb_memcache_dirty_read 26230792
+
+# TYPE hashdb_memcache_dirty_write gauge
+hashdb_memcache_dirty_write 226397768
+
+# TYPE hashdb_memcache_flush_bytes gauge
+hashdb_memcache_flush_bytes 0
+
+# TYPE hashdb_memcache_flush_nodes gauge
+hashdb_memcache_flush_nodes 0
+
+# TYPE hashdb_memcache_gc_bytes gauge
+hashdb_memcache_gc_bytes 0
+
+# TYPE hashdb_memcache_gc_nodes gauge
+hashdb_memcache_gc_nodes 0
+
+# TYPE miner_transactionConditional_elapsedtime_count counter
+miner_transactionConditional_elapsedtime_count 0
+
+# TYPE miner_transactionConditional_elapsedtime summary
+miner_transactionConditional_elapsedtime {quantile="0.5"} 0
+miner_transactionConditional_elapsedtime {quantile="0.75"} 0
+miner_transactionConditional_elapsedtime {quantile="0.95"} 0
+miner_transactionConditional_elapsedtime {quantile="0.99"} 0
+miner_transactionConditional_elapsedtime {quantile="0.999"} 0
+miner_transactionConditional_elapsedtime {quantile="0.9999"} 0
+
+# TYPE miner_transactionConditional_rejected gauge
+miner_transactionConditional_rejected 0
+
+# TYPE miner_transactionInterop_rejected gauge
+miner_transactionInterop_rejected 0
+
+# TYPE p2p_dials gauge
+p2p_dials 0
+
+# TYPE p2p_dials_error_connection gauge
+p2p_dials_error_connection 0
+
+# TYPE p2p_dials_error_id_unexpected gauge
+p2p_dials_error_id_unexpected 0
+
+# TYPE p2p_dials_error_known gauge
+p2p_dials_error_known 0
+
+# TYPE p2p_dials_error_rlpx_enc gauge
+p2p_dials_error_rlpx_enc 0
+
+# TYPE p2p_dials_error_rlpx_proto gauge
+p2p_dials_error_rlpx_proto 0
+
+# TYPE p2p_dials_error_saturated gauge
+p2p_dials_error_saturated 0
+
+# TYPE p2p_dials_error_self gauge
+p2p_dials_error_self 0
+
+# TYPE p2p_dials_error_useless gauge
+p2p_dials_error_useless 0
+
+# TYPE p2p_dials_success gauge
+p2p_dials_success 0
+
+# TYPE p2p_egress gauge
+p2p_egress 0
+
+# TYPE p2p_ingress gauge
+p2p_ingress 0
+
+# TYPE p2p_peers gauge
+p2p_peers 0
+
+# TYPE p2p_peers_inbound gauge
+p2p_peers_inbound 0
+
+# TYPE p2p_peers_outbound gauge
+p2p_peers_outbound 0
+
+# TYPE p2p_serves gauge
+p2p_serves 0
+
+# TYPE p2p_serves_success gauge
+p2p_serves_success 0
+
+# TYPE pathdb_clean_false gauge
+pathdb_clean_false 0
+
+# TYPE pathdb_clean_node_hit gauge
+pathdb_clean_node_hit 0
+
+# TYPE pathdb_clean_node_miss gauge
+pathdb_clean_node_miss 0
+
+# TYPE pathdb_clean_node_read gauge
+pathdb_clean_node_read 0
+
+# TYPE pathdb_clean_node_write gauge
+pathdb_clean_node_write 0
+
+# TYPE pathdb_commit_bytes gauge
+pathdb_commit_bytes 0
+
+# TYPE pathdb_commit_nodes gauge
+pathdb_commit_nodes 0
+
+# TYPE pathdb_commit_time_count counter
+pathdb_commit_time_count 0
+
+# TYPE pathdb_commit_time summary
+pathdb_commit_time {quantile="0.5"} 0
+pathdb_commit_time {quantile="0.75"} 0
+pathdb_commit_time {quantile="0.95"} 0
+pathdb_commit_time {quantile="0.99"} 0
+pathdb_commit_time {quantile="0.999"} 0
+pathdb_commit_time {quantile="0.9999"} 0
+
+# TYPE pathdb_diff_false gauge
+pathdb_diff_false 0
+
+# TYPE pathdb_dirty_false gauge
+pathdb_dirty_false 0
+
+# TYPE pathdb_dirty_node_depth_count counter
+pathdb_dirty_node_depth_count 0
+
+# TYPE pathdb_dirty_node_depth summary
+pathdb_dirty_node_depth {quantile="0.5"} 0
+pathdb_dirty_node_depth {quantile="0.75"} 0
+pathdb_dirty_node_depth {quantile="0.95"} 0
+pathdb_dirty_node_depth {quantile="0.99"} 0
+pathdb_dirty_node_depth {quantile="0.999"} 0
+pathdb_dirty_node_depth {quantile="0.9999"} 0
+
+# TYPE pathdb_dirty_node_hit gauge
+pathdb_dirty_node_hit 0
+
+# TYPE pathdb_dirty_node_miss gauge
+pathdb_dirty_node_miss 0
+
+# TYPE pathdb_dirty_node_read gauge
+pathdb_dirty_node_read 0
+
+# TYPE pathdb_dirty_node_write gauge
+pathdb_dirty_node_write 0
+
+# TYPE pathdb_dirty_state_depth_count counter
+pathdb_dirty_state_depth_count 0
+
+# TYPE pathdb_dirty_state_depth summary
+pathdb_dirty_state_depth {quantile="0.5"} 0
+pathdb_dirty_state_depth {quantile="0.75"} 0
+pathdb_dirty_state_depth {quantile="0.95"} 0
+pathdb_dirty_state_depth {quantile="0.99"} 0
+pathdb_dirty_state_depth {quantile="0.999"} 0
+pathdb_dirty_state_depth {quantile="0.9999"} 0
+
+# TYPE pathdb_dirty_state_hit gauge
+pathdb_dirty_state_hit 0
+
+# TYPE pathdb_dirty_state_miss gauge
+pathdb_dirty_state_miss 0
+
+# TYPE pathdb_dirty_state_read gauge
+pathdb_dirty_state_read 0
+
+# TYPE pathdb_dirty_state_write gauge
+pathdb_dirty_state_write 0
+
+# TYPE pathdb_disk_false gauge
+pathdb_disk_false 0
+
+# TYPE pathdb_gc_account_bytes gauge
+pathdb_gc_account_bytes 0
+
+# TYPE pathdb_gc_account_count gauge
+pathdb_gc_account_count 0
+
+# TYPE pathdb_gc_node_bytes gauge
+pathdb_gc_node_bytes 0
+
+# TYPE pathdb_gc_node_count gauge
+pathdb_gc_node_count 0
+
+# TYPE pathdb_gc_storage_bytes gauge
+pathdb_gc_storage_bytes 0
+
+# TYPE pathdb_gc_storage_count gauge
+pathdb_gc_storage_count 0
+
+# TYPE pathdb_history_bytes_data gauge
+pathdb_history_bytes_data 0
+
+# TYPE pathdb_history_bytes_index gauge
+pathdb_history_bytes_index 0
+
+# TYPE pathdb_history_time_count counter
+pathdb_history_time_count 0
+
+# TYPE pathdb_history_time summary
+pathdb_history_time {quantile="0.5"} 0
+pathdb_history_time {quantile="0.75"} 0
+pathdb_history_time {quantile="0.95"} 0
+pathdb_history_time {quantile="0.99"} 0
+pathdb_history_time {quantile="0.999"} 0
+pathdb_history_time {quantile="0.9999"} 0
+
+# TYPE pathdb_state_account_exist_total gauge
+pathdb_state_account_exist_total 0
+
+# TYPE pathdb_state_account_inex_total gauge
+pathdb_state_account_inex_total 0
+
+# TYPE pathdb_state_storage_exist_total gauge
+pathdb_state_storage_exist_total 0
+
+# TYPE pathdb_state_storage_inex_total gauge
+pathdb_state_storage_inex_total 0
+
+# TYPE rpc_duration_all_count counter
+rpc_duration_all_count 650110
+
+# TYPE rpc_duration_all summary
+rpc_duration_all {quantile="0.5"} 478099.5
+rpc_duration_all {quantile="0.75"} 799067
+rpc_duration_all {quantile="0.95"} 4.491920449999999e+06
+rpc_duration_all {quantile="0.99"} 5.52146103e+06
+rpc_duration_all {quantile="0.999"} 6.586653660000001e+06
+rpc_duration_all {quantile="0.9999"} 6.595744e+06
+
+# TYPE rpc_duration_debug_traceTransaction_success_count counter
+rpc_duration_debug_traceTransaction_success_count 0
+
+# TYPE rpc_duration_debug_traceTransaction_success summary
+rpc_duration_debug_traceTransaction_success {quantile="0.5"} 0
+rpc_duration_debug_traceTransaction_success {quantile="0.75"} 0
+rpc_duration_debug_traceTransaction_success {quantile="0.95"} 0
+rpc_duration_debug_traceTransaction_success {quantile="0.99"} 0
+rpc_duration_debug_traceTransaction_success {quantile="0.999"} 0
+rpc_duration_debug_traceTransaction_success {quantile="0.9999"} 0
+
+# TYPE rpc_duration_engine_forkchoiceUpdatedV3_success_count counter
+rpc_duration_engine_forkchoiceUpdatedV3_success_count 2
+
+# TYPE rpc_duration_engine_forkchoiceUpdatedV3_success summary
+rpc_duration_engine_forkchoiceUpdatedV3_success {quantile="0.5"} 1.0233205e+06
+rpc_duration_engine_forkchoiceUpdatedV3_success {quantile="0.75"} 1.427343e+06
+rpc_duration_engine_forkchoiceUpdatedV3_success {quantile="0.95"} 1.427343e+06
+rpc_duration_engine_forkchoiceUpdatedV3_success {quantile="0.99"} 1.427343e+06
+rpc_duration_engine_forkchoiceUpdatedV3_success {quantile="0.999"} 1.427343e+06
+rpc_duration_engine_forkchoiceUpdatedV3_success {quantile="0.9999"} 1.427343e+06
+
+# TYPE rpc_duration_engine_getPayloadV4_success_count counter
+rpc_duration_engine_getPayloadV4_success_count 1
+
+# TYPE rpc_duration_engine_getPayloadV4_success summary
+rpc_duration_engine_getPayloadV4_success {quantile="0.5"} 258423
+rpc_duration_engine_getPayloadV4_success {quantile="0.75"} 258423
+rpc_duration_engine_getPayloadV4_success {quantile="0.95"} 258423
+rpc_duration_engine_getPayloadV4_success {quantile="0.99"} 258423
+rpc_duration_engine_getPayloadV4_success {quantile="0.999"} 258423
+rpc_duration_engine_getPayloadV4_success {quantile="0.9999"} 258423
+
+# TYPE rpc_duration_engine_newPayloadV4_success_count counter
+rpc_duration_engine_newPayloadV4_success_count 2
+
+# TYPE rpc_duration_engine_newPayloadV4_success summary
+rpc_duration_engine_newPayloadV4_success {quantile="0.5"} 3.3221085e+06
+rpc_duration_engine_newPayloadV4_success {quantile="0.75"} 6.027384e+06
+rpc_duration_engine_newPayloadV4_success {quantile="0.95"} 6.027384e+06
+rpc_duration_engine_newPayloadV4_success {quantile="0.99"} 6.027384e+06
+rpc_duration_engine_newPayloadV4_success {quantile="0.999"} 6.027384e+06
+rpc_duration_engine_newPayloadV4_success {quantile="0.9999"} 6.027384e+06
+
+# TYPE rpc_duration_eth_blobBaseFee_success_count counter
+rpc_duration_eth_blobBaseFee_success_count 0
+
+# TYPE rpc_duration_eth_blobBaseFee_success summary
+rpc_duration_eth_blobBaseFee_success {quantile="0.5"} 0
+rpc_duration_eth_blobBaseFee_success {quantile="0.75"} 0
+rpc_duration_eth_blobBaseFee_success {quantile="0.95"} 0
+rpc_duration_eth_blobBaseFee_success {quantile="0.99"} 0
+rpc_duration_eth_blobBaseFee_success {quantile="0.999"} 0
+rpc_duration_eth_blobBaseFee_success {quantile="0.9999"} 0
+
+# TYPE rpc_duration_eth_blockNumber_success_count counter
+rpc_duration_eth_blockNumber_success_count 0
+
+# TYPE rpc_duration_eth_blockNumber_success summary
+rpc_duration_eth_blockNumber_success {quantile="0.5"} 0
+rpc_duration_eth_blockNumber_success {quantile="0.75"} 0
+rpc_duration_eth_blockNumber_success {quantile="0.95"} 0
+rpc_duration_eth_blockNumber_success {quantile="0.99"} 0
+rpc_duration_eth_blockNumber_success {quantile="0.999"} 0
+rpc_duration_eth_blockNumber_success {quantile="0.9999"} 0
+
+# TYPE rpc_duration_eth_chainId_success_count counter
+rpc_duration_eth_chainId_success_count 0
+
+# TYPE rpc_duration_eth_chainId_success summary
+rpc_duration_eth_chainId_success {quantile="0.5"} 0
+rpc_duration_eth_chainId_success {quantile="0.75"} 0
+rpc_duration_eth_chainId_success {quantile="0.95"} 0
+rpc_duration_eth_chainId_success {quantile="0.99"} 0
+rpc_duration_eth_chainId_success {quantile="0.999"} 0
+rpc_duration_eth_chainId_success {quantile="0.9999"} 0
+
+# TYPE rpc_duration_eth_estimateGas_success_count counter
+rpc_duration_eth_estimateGas_success_count 0
+
+# TYPE rpc_duration_eth_estimateGas_success summary
+rpc_duration_eth_estimateGas_success {quantile="0.5"} 0
+rpc_duration_eth_estimateGas_success {quantile="0.75"} 0
+rpc_duration_eth_estimateGas_success {quantile="0.95"} 0
+rpc_duration_eth_estimateGas_success {quantile="0.99"} 0
+rpc_duration_eth_estimateGas_success {quantile="0.999"} 0
+rpc_duration_eth_estimateGas_success {quantile="0.9999"} 0
+
+# TYPE rpc_duration_eth_gasPrice_success_count counter
+rpc_duration_eth_gasPrice_success_count 0
+
+# TYPE rpc_duration_eth_gasPrice_success summary
+rpc_duration_eth_gasPrice_success {quantile="0.5"} 0
+rpc_duration_eth_gasPrice_success {quantile="0.75"} 0
+rpc_duration_eth_gasPrice_success {quantile="0.95"} 0
+rpc_duration_eth_gasPrice_success {quantile="0.99"} 0
+rpc_duration_eth_gasPrice_success {quantile="0.999"} 0
+rpc_duration_eth_gasPrice_success {quantile="0.9999"} 0
+
+# TYPE rpc_duration_eth_getBalance_success_count counter
+rpc_duration_eth_getBalance_success_count 0
+
+# TYPE rpc_duration_eth_getBalance_success summary
+rpc_duration_eth_getBalance_success {quantile="0.5"} 0
+rpc_duration_eth_getBalance_success {quantile="0.75"} 0
+rpc_duration_eth_getBalance_success {quantile="0.95"} 0
+rpc_duration_eth_getBalance_success {quantile="0.99"} 0
+rpc_duration_eth_getBalance_success {quantile="0.999"} 0
+rpc_duration_eth_getBalance_success {quantile="0.9999"} 0
+
+# TYPE rpc_duration_eth_getBlockByHash_success_count counter
+rpc_duration_eth_getBlockByHash_success_count 1
+
+# TYPE rpc_duration_eth_getBlockByHash_success summary
+rpc_duration_eth_getBlockByHash_success {quantile="0.5"} 473295
+rpc_duration_eth_getBlockByHash_success {quantile="0.75"} 473295
+rpc_duration_eth_getBlockByHash_success {quantile="0.95"} 473295
+rpc_duration_eth_getBlockByHash_success {quantile="0.99"} 473295
+rpc_duration_eth_getBlockByHash_success {quantile="0.999"} 473295
+rpc_duration_eth_getBlockByHash_success {quantile="0.9999"} 473295
+
+# TYPE rpc_duration_eth_getBlockByNumber_failure_count counter
+rpc_duration_eth_getBlockByNumber_failure_count 0
+
+# TYPE rpc_duration_eth_getBlockByNumber_failure summary
+rpc_duration_eth_getBlockByNumber_failure {quantile="0.5"} 0
+rpc_duration_eth_getBlockByNumber_failure {quantile="0.75"} 0
+rpc_duration_eth_getBlockByNumber_failure {quantile="0.95"} 0
+rpc_duration_eth_getBlockByNumber_failure {quantile="0.99"} 0
+rpc_duration_eth_getBlockByNumber_failure {quantile="0.999"} 0
+rpc_duration_eth_getBlockByNumber_failure {quantile="0.9999"} 0
+
+# TYPE rpc_duration_eth_getBlockByNumber_success_count counter
+rpc_duration_eth_getBlockByNumber_success_count 1
+
+# TYPE rpc_duration_eth_getBlockByNumber_success summary
+rpc_duration_eth_getBlockByNumber_success {quantile="0.5"} 455417
+rpc_duration_eth_getBlockByNumber_success {quantile="0.75"} 455417
+rpc_duration_eth_getBlockByNumber_success {quantile="0.95"} 455417
+rpc_duration_eth_getBlockByNumber_success {quantile="0.99"} 455417
+rpc_duration_eth_getBlockByNumber_success {quantile="0.999"} 455417
+rpc_duration_eth_getBlockByNumber_success {quantile="0.9999"} 455417
+
+# TYPE rpc_duration_eth_getBlockReceipts_success_count counter
+rpc_duration_eth_getBlockReceipts_success_count 0
+
+# TYPE rpc_duration_eth_getBlockReceipts_success summary
+rpc_duration_eth_getBlockReceipts_success {quantile="0.5"} 0
+rpc_duration_eth_getBlockReceipts_success {quantile="0.75"} 0
+rpc_duration_eth_getBlockReceipts_success {quantile="0.95"} 0
+rpc_duration_eth_getBlockReceipts_success {quantile="0.99"} 0
+rpc_duration_eth_getBlockReceipts_success {quantile="0.999"} 0
+rpc_duration_eth_getBlockReceipts_success {quantile="0.9999"} 0
+
+# TYPE rpc_duration_eth_getCode_success_count counter
+rpc_duration_eth_getCode_success_count 0
+
+# TYPE rpc_duration_eth_getCode_success summary
+rpc_duration_eth_getCode_success {quantile="0.5"} 0
+rpc_duration_eth_getCode_success {quantile="0.75"} 0
+rpc_duration_eth_getCode_success {quantile="0.95"} 0
+rpc_duration_eth_getCode_success {quantile="0.99"} 0
+rpc_duration_eth_getCode_success {quantile="0.999"} 0
+rpc_duration_eth_getCode_success {quantile="0.9999"} 0
+
+# TYPE rpc_duration_eth_getTransactionCount_success_count counter
+rpc_duration_eth_getTransactionCount_success_count 0
+
+# TYPE rpc_duration_eth_getTransactionCount_success summary
+rpc_duration_eth_getTransactionCount_success {quantile="0.5"} 0
+rpc_duration_eth_getTransactionCount_success {quantile="0.75"} 0
+rpc_duration_eth_getTransactionCount_success {quantile="0.95"} 0
+rpc_duration_eth_getTransactionCount_success {quantile="0.99"} 0
+rpc_duration_eth_getTransactionCount_success {quantile="0.999"} 0
+rpc_duration_eth_getTransactionCount_success {quantile="0.9999"} 0
+
+# TYPE rpc_duration_eth_getTransactionReceipt_success_count counter
+rpc_duration_eth_getTransactionReceipt_success_count 0
+
+# TYPE rpc_duration_eth_getTransactionReceipt_success summary
+rpc_duration_eth_getTransactionReceipt_success {quantile="0.5"} 0
+rpc_duration_eth_getTransactionReceipt_success {quantile="0.75"} 0
+rpc_duration_eth_getTransactionReceipt_success {quantile="0.95"} 0
+rpc_duration_eth_getTransactionReceipt_success {quantile="0.99"} 0
+rpc_duration_eth_getTransactionReceipt_success {quantile="0.999"} 0
+rpc_duration_eth_getTransactionReceipt_success {quantile="0.9999"} 0
+
+# TYPE rpc_duration_eth_sendRawTransaction_success_count counter
+rpc_duration_eth_sendRawTransaction_success_count 0
+
+# TYPE rpc_duration_eth_sendRawTransaction_success summary
+rpc_duration_eth_sendRawTransaction_success {quantile="0.5"} 0
+rpc_duration_eth_sendRawTransaction_success {quantile="0.75"} 0
+rpc_duration_eth_sendRawTransaction_success {quantile="0.95"} 0
+rpc_duration_eth_sendRawTransaction_success {quantile="0.99"} 0
+rpc_duration_eth_sendRawTransaction_success {quantile="0.999"} 0
+rpc_duration_eth_sendRawTransaction_success {quantile="0.9999"} 0
+
+# TYPE rpc_duration_miner_setMaxDASize_success_count counter
+rpc_duration_miner_setMaxDASize_success_count 1
+
+# TYPE rpc_duration_miner_setMaxDASize_success summary
+rpc_duration_miner_setMaxDASize_success {quantile="0.5"} 83866
+rpc_duration_miner_setMaxDASize_success {quantile="0.75"} 83866
+rpc_duration_miner_setMaxDASize_success {quantile="0.95"} 83866
+rpc_duration_miner_setMaxDASize_success {quantile="0.99"} 83866
+rpc_duration_miner_setMaxDASize_success {quantile="0.999"} 83866
+rpc_duration_miner_setMaxDASize_success {quantile="0.9999"} 83866
+
+# TYPE rpc_failure gauge
+rpc_failure 2
+
+# TYPE rpc_requests gauge
+rpc_requests 650110
+
+# TYPE rpc_success gauge
+rpc_success 650108
+
+# TYPE sequencer_sendRawTransactionConditional_accepted gauge
+sequencer_sendRawTransactionConditional_accepted 0
+
+# TYPE sequencer_sendRawTransactionConditional_cost gauge
+sequencer_sendRawTransactionConditional_cost 0
+
+# TYPE sequencer_sendRawTransactionConditional_requests gauge
+sequencer_sendRawTransactionConditional_requests 0
+
+# TYPE state_delete_account gauge
+state_delete_account 24653
+
+# TYPE state_delete_accountnodes gauge
+state_delete_accountnodes 0
+
+# TYPE state_delete_storage gauge
+state_delete_storage 0
+
+# TYPE state_delete_storagenodes gauge
+state_delete_storagenodes 0
+
+# TYPE state_read_accounts gauge
+state_read_accounts 398637
+
+# TYPE state_read_storage gauge
+state_read_storage 303507
+
+# TYPE state_snapshot_bloom_account_falsehit gauge
+state_snapshot_bloom_account_falsehit 0
+
+# TYPE state_snapshot_bloom_account_miss gauge
+state_snapshot_bloom_account_miss 157618
+
+# TYPE state_snapshot_bloom_account_truehit gauge
+state_snapshot_bloom_account_truehit 327247
+
+# TYPE state_snapshot_bloom_error gauge
+state_snapshot_bloom_error 0.00018016876021720944
+
+# TYPE state_snapshot_bloom_index_count counter
+state_snapshot_bloom_index_count 1
+
+# TYPE state_snapshot_bloom_index summary
+state_snapshot_bloom_index {quantile="0.5"} 86935
+state_snapshot_bloom_index {quantile="0.75"} 86935
+state_snapshot_bloom_index {quantile="0.95"} 86935
+state_snapshot_bloom_index {quantile="0.99"} 86935
+state_snapshot_bloom_index {quantile="0.999"} 86935
+state_snapshot_bloom_index {quantile="0.9999"} 86935
+
+# TYPE state_snapshot_bloom_storage_falsehit gauge
+state_snapshot_bloom_storage_falsehit 0
+
+# TYPE state_snapshot_bloom_storage_miss gauge
+state_snapshot_bloom_storage_miss 441232
+
+# TYPE state_snapshot_bloom_storage_truehit gauge
+state_snapshot_bloom_storage_truehit 186937
+
+# TYPE state_snapshot_clean_account_hit gauge
+state_snapshot_clean_account_hit 157574
+
+# TYPE state_snapshot_clean_account_inex gauge
+state_snapshot_clean_account_inex 39
+
+# TYPE state_snapshot_clean_account_miss gauge
+state_snapshot_clean_account_miss 60
+
+# TYPE state_snapshot_clean_account_read gauge
+state_snapshot_clean_account_read 5587670
+
+# TYPE state_snapshot_clean_account_write gauge
+state_snapshot_clean_account_write 3082
+
+# TYPE state_snapshot_clean_storage_hit gauge
+state_snapshot_clean_storage_hit 416639
+
+# TYPE state_snapshot_clean_storage_inex gauge
+state_snapshot_clean_storage_inex 24614
+
+# TYPE state_snapshot_clean_storage_miss gauge
+state_snapshot_clean_storage_miss 24615
+
+# TYPE state_snapshot_clean_storage_read gauge
+state_snapshot_clean_storage_read 4957659
+
+# TYPE state_snapshot_clean_storage_write gauge
+state_snapshot_clean_storage_write 962553
+
+# TYPE state_snapshot_dirty_account_hit gauge
+state_snapshot_dirty_account_hit 327247
+
+# TYPE state_snapshot_dirty_account_hit_depth_count counter
+state_snapshot_dirty_account_hit_depth_count 327247
+
+# TYPE state_snapshot_dirty_account_hit_depth summary
+state_snapshot_dirty_account_hit_depth {quantile="0.5"} 0
+state_snapshot_dirty_account_hit_depth {quantile="0.75"} 0
+state_snapshot_dirty_account_hit_depth {quantile="0.95"} 0
+state_snapshot_dirty_account_hit_depth {quantile="0.99"} 0
+state_snapshot_dirty_account_hit_depth {quantile="0.999"} 0
+state_snapshot_dirty_account_hit_depth {quantile="0.9999"} 0
+
+# TYPE state_snapshot_dirty_account_inex gauge
+state_snapshot_dirty_account_inex 0
+
+# TYPE state_snapshot_dirty_account_miss gauge
+state_snapshot_dirty_account_miss 157634
+
+# TYPE state_snapshot_dirty_account_read gauge
+state_snapshot_dirty_account_read 13445007
+
+# TYPE state_snapshot_dirty_account_write gauge
+state_snapshot_dirty_account_write 6200860
+
+# TYPE state_snapshot_dirty_storage_hit gauge
+state_snapshot_dirty_storage_hit 186937
+
+# TYPE state_snapshot_dirty_storage_hit_depth_count counter
+state_snapshot_dirty_storage_hit_depth_count 186937
+
+# TYPE state_snapshot_dirty_storage_hit_depth summary
+state_snapshot_dirty_storage_hit_depth {quantile="0.5"} 1
+state_snapshot_dirty_storage_hit_depth {quantile="0.75"} 3
+state_snapshot_dirty_storage_hit_depth {quantile="0.95"} 5
+state_snapshot_dirty_storage_hit_depth {quantile="0.99"} 5
+state_snapshot_dirty_storage_hit_depth {quantile="0.999"} 5
+state_snapshot_dirty_storage_hit_depth {quantile="0.9999"} 5
+
+# TYPE state_snapshot_dirty_storage_inex gauge
+state_snapshot_dirty_storage_inex 0
+
+# TYPE state_snapshot_dirty_storage_miss gauge
+state_snapshot_dirty_storage_miss 441254
+
+# TYPE state_snapshot_dirty_storage_read gauge
+state_snapshot_dirty_storage_read 2718563
+
+# TYPE state_snapshot_dirty_storage_write gauge
+state_snapshot_dirty_storage_write 1740935
+
+# TYPE state_snapshot_flush_account_item gauge
+state_snapshot_flush_account_item 89
+
+# TYPE state_snapshot_flush_account_size gauge
+state_snapshot_flush_account_size 2371
+
+# TYPE state_snapshot_flush_storage_item gauge
+state_snapshot_flush_storage_item 46136
+
+# TYPE state_snapshot_flush_storage_size gauge
+state_snapshot_flush_storage_size 962532
+
+# TYPE state_snapshot_generation_account_generated gauge
+state_snapshot_generation_account_generated 2349
+
+# TYPE state_snapshot_generation_account_missall gauge
+state_snapshot_generation_account_missall 1
+
+# TYPE state_snapshot_generation_account_recovered gauge
+state_snapshot_generation_account_recovered 0
+
+# TYPE state_snapshot_generation_account_wiped gauge
+state_snapshot_generation_account_wiped 0
+
+# TYPE state_snapshot_generation_duration_account_prove gauge
+state_snapshot_generation_duration_account_prove 45664
+
+# TYPE state_snapshot_generation_duration_account_snapread gauge
+state_snapshot_generation_duration_account_snapread 6884
+
+# TYPE state_snapshot_generation_duration_account_trieread gauge
+state_snapshot_generation_duration_account_trieread 49654344
+
+# TYPE state_snapshot_generation_duration_account_write gauge
+state_snapshot_generation_duration_account_write 90483347
+
+# TYPE state_snapshot_generation_duration_storage_clean gauge
+state_snapshot_generation_duration_storage_clean 402353
+
+# TYPE state_snapshot_generation_duration_storage_prove gauge
+state_snapshot_generation_duration_storage_prove 5836820
+
+# TYPE state_snapshot_generation_duration_storage_snapread gauge
+state_snapshot_generation_duration_storage_snapread 232388
+
+# TYPE state_snapshot_generation_duration_storage_trieread gauge
+state_snapshot_generation_duration_storage_trieread 7172902
+
+# TYPE state_snapshot_generation_duration_storage_write gauge
+state_snapshot_generation_duration_storage_write 2015916
+
+# TYPE state_snapshot_generation_proof_failure gauge
+state_snapshot_generation_proof_failure 2052
+
+# TYPE state_snapshot_generation_proof_success gauge
+state_snapshot_generation_proof_success 0
+
+# TYPE state_snapshot_generation_storage_dangling gauge
+state_snapshot_generation_storage_dangling 0
+
+# TYPE state_snapshot_generation_storage_generated gauge
+state_snapshot_generation_storage_generated 2085
+
+# TYPE state_snapshot_generation_storage_missall gauge
+state_snapshot_generation_storage_missall 2051
+
+# TYPE state_snapshot_generation_storage_recovered gauge
+state_snapshot_generation_storage_recovered 0
+
+# TYPE state_snapshot_generation_storage_wiped gauge
+state_snapshot_generation_storage_wiped 0
+
+# TYPE state_update_account gauge
+state_update_account 136333
+
+# TYPE state_update_accountnodes gauge
+state_update_accountnodes 471715
+
+# TYPE state_update_storage gauge
+state_update_storage 88377
+
+# TYPE state_update_storagenodes gauge
+state_update_storagenodes 346125
+
+# TYPE superchain_recommended_delta gauge
+superchain_recommended_delta 0
+
+# TYPE superchain_required_delta gauge
+superchain_required_delta 0
+
+# TYPE system_cpu_goroutines gauge
+system_cpu_goroutines 90
+
+# TYPE system_cpu_procload gauge
+system_cpu_procload 1
+
+# TYPE system_cpu_procload_total gauge
+system_cpu_procload_total 1707.761234
+
+# TYPE system_cpu_schedlatency_count counter
+system_cpu_schedlatency_count 2176038
+
+# TYPE system_cpu_schedlatency summary
+system_cpu_schedlatency {quantile="0.5"} 1280
+system_cpu_schedlatency {quantile="0.75"} 8192
+system_cpu_schedlatency {quantile="0.95"} 229376
+system_cpu_schedlatency {quantile="0.99"} 917504
+system_cpu_schedlatency {quantile="0.999"} 3.3554432e+07
+system_cpu_schedlatency {quantile="0.9999"} 2.68435456e+08
+
+# TYPE system_cpu_sysload gauge
+system_cpu_sysload 149
+
+# TYPE system_cpu_sysload_total gauge
+system_cpu_sysload_total 936215.18
+
+# TYPE system_cpu_syswait gauge
+system_cpu_syswait 4
+
+# TYPE system_cpu_syswait_total gauge
+system_cpu_syswait_total 21754.05
+
+# TYPE system_cpu_threads gauge
+system_cpu_threads 17
+
+# TYPE system_disk_readbytes gauge
+system_disk_readbytes 1165278341
+
+# TYPE system_disk_readcount gauge
+system_disk_readcount 2100293
+
+# TYPE system_disk_readdata gauge
+system_disk_readdata 1165278341
+
+# TYPE system_disk_writebytes gauge
+system_disk_writebytes 2044434922
+
+# TYPE system_disk_writecount gauge
+system_disk_writecount 1694193
+
+# TYPE system_disk_writedata gauge
+system_disk_writedata 2044434922
+
+# TYPE system_memory_allocs gauge
+system_memory_allocs 70062739952
+
+# TYPE system_memory_frees gauge
+system_memory_frees 69964003880
+
+# TYPE system_memory_held gauge
+system_memory_held 524042616
+
+# TYPE system_memory_objects gauge
+system_memory_objects 98736072
+
+# TYPE system_memory_pauses_count counter
+system_memory_pauses_count 2398
+
+# TYPE system_memory_pauses summary
+system_memory_pauses {quantile="0.5"} 57344
+system_memory_pauses {quantile="0.75"} 114688
+system_memory_pauses {quantile="0.95"} 524288
+system_memory_pauses {quantile="0.99"} 1.572864e+06
+system_memory_pauses {quantile="0.999"} 5.24288e+06
+system_memory_pauses {quantile="0.9999"} 5.24288e+06
+
+# TYPE system_memory_used gauge
+system_memory_used 121329984
+
+# TYPE trie_prefetch_chain_account_dup_cross gauge
+trie_prefetch_chain_account_dup_cross 0
+
+# TYPE trie_prefetch_chain_account_dup_read gauge
+trie_prefetch_chain_account_dup_read 0
+
+# TYPE trie_prefetch_chain_account_dup_write gauge
+trie_prefetch_chain_account_dup_write 1967597
+
+# TYPE trie_prefetch_chain_account_load_read gauge
+trie_prefetch_chain_account_load_read 0
+
+# TYPE trie_prefetch_chain_account_load_write gauge
+trie_prefetch_chain_account_load_write 160986
+
+# TYPE trie_prefetch_chain_account_waste gauge
+trie_prefetch_chain_account_waste 0
+
+# TYPE trie_prefetch_chain_deliverymiss gauge
+trie_prefetch_chain_deliverymiss 0
+
+# TYPE trie_prefetch_chain_storage_dup_cross gauge
+trie_prefetch_chain_storage_dup_cross 0
+
+# TYPE trie_prefetch_chain_storage_dup_read gauge
+trie_prefetch_chain_storage_dup_read 0
+
+# TYPE trie_prefetch_chain_storage_dup_write gauge
+trie_prefetch_chain_storage_dup_write 0
+
+# TYPE trie_prefetch_chain_storage_load_read gauge
+trie_prefetch_chain_storage_load_read 0
+
+# TYPE trie_prefetch_chain_storage_load_write gauge
+trie_prefetch_chain_storage_load_write 88371
+
+# TYPE trie_prefetch_chain_storage_waste gauge
+trie_prefetch_chain_storage_waste 0
+
+# TYPE trie_sync_codes gauge
+trie_sync_codes 0
+
+# TYPE trie_sync_delete gauge
+trie_sync_delete 0
+
+# TYPE trie_sync_lookup gauge
+trie_sync_lookup 0
+
+# TYPE trie_sync_nodes_account gauge
+trie_sync_nodes_account 0
+
+# TYPE trie_sync_nodes_storage gauge
+trie_sync_nodes_storage 0
+
+# TYPE trie_verkle_cache_hit gauge
+trie_verkle_cache_hit 0
+
+# TYPE trie_verkle_cache_miss gauge
+trie_verkle_cache_miss 0
+
+# TYPE txpool_dropbetweenreorg_count counter
+txpool_dropbetweenreorg_count 420770
+
+# TYPE txpool_dropbetweenreorg summary
+txpool_dropbetweenreorg {quantile="0.5"} 0
+txpool_dropbetweenreorg {quantile="0.75"} 0
+txpool_dropbetweenreorg {quantile="0.95"} 0
+txpool_dropbetweenreorg {quantile="0.99"} 0
+txpool_dropbetweenreorg {quantile="0.999"} 0
+txpool_dropbetweenreorg {quantile="0.9999"} 0
+
+# TYPE txpool_invalid gauge
+txpool_invalid 0
+
+# TYPE txpool_known gauge
+txpool_known 0
+
+# TYPE txpool_local gauge
+txpool_local 0
+
+# TYPE txpool_overflowed gauge
+txpool_overflowed 0
+
+# TYPE txpool_pending gauge
+txpool_pending 0
+
+# TYPE txpool_pending_discard gauge
+txpool_pending_discard 0
+
+# TYPE txpool_pending_nofunds gauge
+txpool_pending_nofunds 0
+
+# TYPE txpool_pending_ratelimit gauge
+txpool_pending_ratelimit 0
+
+# TYPE txpool_pending_replace gauge
+txpool_pending_replace 0
+
+# TYPE txpool_queued gauge
+txpool_queued 0
+
+# TYPE txpool_queued_discard gauge
+txpool_queued_discard 0
+
+# TYPE txpool_queued_eviction gauge
+txpool_queued_eviction 0
+
+# TYPE txpool_queued_nofunds gauge
+txpool_queued_nofunds 0
+
+# TYPE txpool_queued_ratelimit gauge
+txpool_queued_ratelimit 0
+
+# TYPE txpool_queued_replace gauge
+txpool_queued_replace 0
+
+# TYPE txpool_reheap_count counter
+txpool_reheap_count 24653
+
+# TYPE txpool_reheap summary
+txpool_reheap {quantile="0.5"} 3635
+txpool_reheap {quantile="0.75"} 3934.5
+txpool_reheap {quantile="0.95"} 4562.15
+txpool_reheap {quantile="0.99"} 16765.280000000137
+txpool_reheap {quantile="0.999"} 995777.8500000035
+txpool_reheap {quantile="0.9999"} 1.023222e+06
+
+# TYPE txpool_reorgtime_count counter
+txpool_reorgtime_count 420770
+
+# TYPE txpool_reorgtime summary
+txpool_reorgtime {quantile="0.5"} 215878
+txpool_reorgtime {quantile="0.75"} 261810.75
+txpool_reorgtime {quantile="0.95"} 519572.79999999993
+txpool_reorgtime {quantile="0.99"} 1.249134670000003e+06
+txpool_reorgtime {quantile="0.999"} 3.3537512490000036e+06
+txpool_reorgtime {quantile="0.9999"} 3.382804e+06
+
+# TYPE txpool_reservations_0 gauge
+txpool_reservations_0 0
+
+# TYPE txpool_slots gauge
+txpool_slots 0
+
+# TYPE txpool_throttle gauge
+txpool_throttle 0
+
+# TYPE txpool_underpriced gauge
+txpool_underpriced 0
+
+# TYPE txpool_valid gauge
+txpool_valid 396133

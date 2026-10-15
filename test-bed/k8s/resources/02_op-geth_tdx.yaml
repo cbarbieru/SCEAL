@@ -1,0 +1,116 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    port.authrpc: "8551"
+    port.http: "8545"
+    port.metrics: "9090"
+    port.rpc: "30303"
+    port.ws: "8546"
+    service: op-geth-ext
+  labels:
+    l2.service: op-geth-ext
+  name: op-geth-ext
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      l2.service: op-geth-ext
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        port.authrpc: "8551"
+        port.http: "8545"
+        port.metrics: "9090"
+        port.rpc: "30303"
+        port.ws: "8546"
+        service: op-geth-ext
+      labels:
+        l2.service: op-geth-ext
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                  - tdx-guest
+      containers:
+        - args:
+            - -c
+            - geth init --datadir /data_opgeth --state.scheme hash /data/l2-genesis.json && exec geth --datadir /data_opgeth --verbosity 3 --http --http.corsdomain "*" --http.vhosts "*" --http.addr 0.0.0.0 --http.port 8545 --http.api web3,debug,eth,txpool,net,engine,miner --ws --ws.addr 0.0.0.0 --ws.port 8546 --ws.origins "*" --ws.api debug,eth,txpool,net,engine,miner --syncmode full --nodiscover --maxpeers 5 --rpc.allow-unprotected-txs --authrpc.addr 0.0.0.0 --authrpc.port 8551 --authrpc.vhosts "*" --authrpc.jwtsecret /data/jwtsecret --gcmode archive --state.scheme hash --port 30303 --nodekey /data/enode-key-1.txt --metrics --metrics.addr 0.0.0.0 --metrics.port 9090
+          command:
+            - /bin/sh
+          image: us-docker.pkg.dev/oplabs-tools-artifacts/images/op-geth:v1.101503.2-rc.5
+          name: op-geth-ext
+          ports:
+            - containerPort: 8545
+              protocol: TCP
+            - containerPort: 8546
+              protocol: TCP
+            - containerPort: 8551
+              protocol: TCP
+            - containerPort: 30303
+              protocol: TCP
+            - containerPort: 9090
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /data/l2-genesis.json
+              name: op-geth-ext-l2-genesis
+            - mountPath: /data/jwtsecret
+              name: op-geth-ext-jwtsecret
+            - mountPath: /data/enode-key-1.txt
+              name: op-geth-ext-enode-key
+      restartPolicy: Always
+      volumes:
+        - hostPath:
+            path: /tmp/builder-playground-opstack-k8s/storage/l2-genesis.json
+            type: File
+          name: op-geth-ext-l2-genesis
+        - hostPath:
+            path: /tmp/builder-playground-opstack-k8s/storage/jwtsecret
+            type: File
+          name: op-geth-ext-jwtsecret
+        - hostPath:
+            path: /tmp/builder-playground-opstack-k8s/storage/enode-key-1.txt
+            type: File
+          name: op-geth-ext-enode-key
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    port.authrpc: "8551"
+    port.http: "8545"
+    port.metrics: "9090"
+    port.rpc: "30303"
+    port.ws: "8546"
+    service: op-geth-ext
+  labels:
+    l2.service: op-geth-ext
+  name: op-geth-ext
+spec:
+  ports:
+    - name: "8545"
+      port: 8545
+      targetPort: 8545
+    - name: "8546"
+      port: 8546
+      targetPort: 8546
+    - name: "8551"
+      port: 8551
+      targetPort: 8551
+    - name: "30303"
+      port: 30303
+      targetPort: 30303
+    - name: "9090"
+      port: 9090
+      targetPort: 9090
+  selector:
+    l2.service: op-geth-ext

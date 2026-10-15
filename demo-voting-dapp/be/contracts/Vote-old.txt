@@ -1,0 +1,47 @@
+// // SPDX-License-Identifier: MITs
+// pragma solidity ^0.8.9;
+
+// contract VoteOld {
+//     string private electionId;
+//     address private owner;
+//     mapping(bytes32 => bytes32) votes;
+
+//     constructor() {
+//         owner = msg.sender;
+//     }
+
+//     modifier onlyByTheOwner() {
+//         require(msg.sender == owner, "Not the owner");
+//         _;
+//     }
+
+//     function setElection(string memory elId) public onlyByTheOwner {
+//         electionId = elId;
+//     }
+
+//     function getElection() public view returns (string memory) {
+//         return electionId;
+//     }
+
+//     function addVote(
+//         bytes32 userElHash,
+//         bytes32 candidateHash
+//     ) public onlyByTheOwner {
+
+//         votes[userElHash] = candidateHash;
+    
+//     }
+
+//     function getVote(
+//         bytes32 userElectionHash
+//     ) public view onlyByTheOwner returns (bytes32) {
+
+//         bytes32 candidateHash = votes[userElectionHash];
+
+//         if (candidateHash != "") {
+//             return candidateHash;
+//         }
+
+//         return "unknown";
+//     }
+// }

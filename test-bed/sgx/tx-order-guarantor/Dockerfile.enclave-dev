@@ -1,0 +1,29 @@
+# syntax=docker/dockerfile:1
+#
+# LOCAL / non-SGX dev image for tog-enclave.
+#
+# Runs the enclave binary as an ordinary Linux process — NO SGX, NO ftxsgx-runner,
+# NO attestation, plaintext. Exactly the dev server you get from
+# `cargo run -p tog-enclave`, packaged for integration testing / CI / demos
+# without SGX hardware. The real attested deployment uses Dockerfile.enclave
+# (SGX) instead — this image is NOT secure and must not be used in production.
+#
+#   docker build -f Dockerfile.enclave-dev -t tog-enclave-dev .
+#   docker run --rm -p 1546:1546 -p 1547:1547 tog-enclave-dev
+#   # then, from the host:  cargo run -p tog-client -- demo
+#
+# Stable Rust, normal host target — only the real SGX build needs nightly + the
+# Fortanix tools. No mbedtls/SGX/openssl: the host enclave binary is pure-Rust
+# (alloy + k256) over glibc, so the runtime is just debian-slim + the binary.
+
+FROM rust:1-bookworm AS build
+WORKDIR /src
+COPY . .
+RUN cargo build --release -p tog-enclave
+
+# debian-slim keeps a shell for poking around; the binary needs only glibc.
+FROM debian:bookworm-slim AS runtime
+COPY --from=build /src/target/release/tog-enclave /usr/local/bin/tog-enclave
+
+EXPOSE 1546 1547
+ENTRYPOINT ["tog-enclave"]

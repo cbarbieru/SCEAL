@@ -1,0 +1,212 @@
+# demo-voting-dapp: MongoDB + backend + frontend (default namespace, like the L2 stack).
+#
+# The backend sends its transactions to the L2 JSON-RPC endpoint given by ${L2_RPC_URL},
+# e.g. http://op-geth:8545 or http://op-rbuilder:8545. Apply with:
+#
+#   L2_RPC_URL=http://op-geth:8545 envsubst '${L2_RPC_URL}' < demo-voting-dapp.yaml | sudo k3s kubectl apply -f -
+#
+# All three pods are pinned to the master node (same as the testing pods) so they stay off the
+# nodes under test, and so the backend can hand the voter CSVs to the JMeter pod through the
+# shared host dir /tmp/sceal/jmeter.
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: online-voting-be
+type: Opaque
+stringData:
+  # Public dev account #0 (prefunded by builder-playground and the k8s genesis). Test value only.
+  PRIVATE_KEY: "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80"
+  # Must match the salt used when generating the voter CSVs (CreateUsers.js reads the same variable).
+  COMMIT_REVEAL_SECRET: "H0wcS6£.4N"
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongodb
+  labels:
+    app: mongodb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongodb
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mongodb
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                  - ubuntu-cp
+      containers:
+        - name: mongodb
+          image: docker.io/library/mongo:7
+          ports:
+            - containerPort: 27017
+          volumeMounts:
+            - name: data
+              mountPath: /data/db
+      volumes:
+        # Ephemeral on purpose: every redeploy starts from a clean database.
+        - name: data
+          emptyDir: {}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb
+spec:
+  selector:
+    app: mongodb
+  ports:
+    - port: 27017
+      targetPort: 27017
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: online-voting-be
+  labels:
+    app: online-voting-be
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: online-voting-be
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: online-voting-be
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                  - ubuntu-cp
+      containers:
+        - name: online-voting-be
+          image: docker.io/cbarbieru/online-voting-be:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: PLAYGROUND_API_URL
+              value: "${L2_RPC_URL}"
+            - name: CURRENT_PROVIDER
+              value: Playground
+            - name: MONGODB_URI
+              value: mongodb://mongodb:27017/voting_db
+            - name: PRIVATE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: online-voting-be
+                  key: PRIVATE_KEY
+            - name: COMMIT_REVEAL_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: online-voting-be
+                  key: COMMIT_REVEAL_SECRET
+            # entrypoint.sh: deploy the contract, create the voters + CSVs, seed today's election, start the server.
+            - name: CREATE_USERS
+              value: "true"
+            - name: SEED_ELECTION
+              value: "true"
+            - name: WALLET_POOL_SIZE
+              value: "10"
+            - name: NUM_USERS
+              value: "501"
+            - name: OUTPUT_DIR
+              value: /output
+          # Ready only once the contract is deployed, the users exist and the server listens.
+          readinessProbe:
+            tcpSocket:
+              port: 8080
+            periodSeconds: 5
+            failureThreshold: 3
+          volumeMounts:
+            - name: voter-csvs
+              mountPath: /output
+      volumes:
+        - name: voter-csvs
+          hostPath:
+            path: /tmp/sceal/jmeter
+            type: DirectoryOrCreate
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: online-voting-be
+spec:
+  selector:
+    app: online-voting-be
+  ports:
+    - port: 8080
+      targetPort: 8080
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: online-voting-fe
+  labels:
+    app: online-voting-fe
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: online-voting-fe
+  template:
+    metadata:
+      labels:
+        app: online-voting-fe
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                  - ubuntu-cp
+      containers:
+        - name: online-voting-fe
+          image: docker.io/cbarbieru/online-voting-fe:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3030
+          env:
+            # vite preview proxies /api to the backend service
+            - name: BACKEND_URL
+              value: http://online-voting-be:8080
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: online-voting-fe
+spec:
+  selector:
+    app: online-voting-fe
+  ports:
+    - port: 3030
+      targetPort: 3030

@@ -1,0 +1,125 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    port.authrpc: "8551"
+    port.http: "8545"
+    port.metrics: "9090"
+    port.rpc: "30303"
+    service: op-rbuilder
+  labels:
+    l2.service: op-rbuilder
+  name: op-rbuilder
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      l2.service: op-rbuilder
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        port.authrpc: "8551"
+        port.http: "8545"
+        port.metrics: "9090"
+        port.rpc: "30303"
+        service: op-rbuilder
+      labels:
+        l2.service: op-rbuilder
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                  - EXT_NODE
+      containers:
+        - args:
+            - node
+            - --authrpc.port
+            - "8551"
+            - --authrpc.addr
+            - 0.0.0.0
+            - --authrpc.jwtsecret
+            - /data/jwtsecret
+            - --http
+            - --http.addr
+            - 0.0.0.0
+            - --http.port
+            - "8545"
+            - --chain
+            - /data/l2-genesis.json
+            - --datadir
+            - /data_op_reth
+            - --disable-discovery
+            - --color
+            - never
+            - --metrics
+            - 0.0.0.0:9090
+            - --port
+            - "30303"
+            - --builder.enable-revert-protection
+            - --trusted-peers
+            - enode://79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798483ada7726a3c4655da4fbfc0e1108a8fd17b448a68554199c47d08ffb10d4b8@op-geth:30303
+            - --rollup.builder-secret-key 
+            - "0x2a871d0798f97d79848a013d4936a73bf4cc922c825d33c1cf7073dff6d409c6"          
+          image: docker.io/cbarbieru/op-rbuilder:sha-4f1931b-cb-2
+          name: op-rbuilder
+          ports:
+            - containerPort: 8551
+              protocol: TCP
+            - containerPort: 8545
+              protocol: TCP
+            - containerPort: 9090
+              protocol: TCP
+            - containerPort: 30303
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /data/jwtsecret
+              name: op-rbuilder-jwtsecret
+            - mountPath: /data/l2-genesis.json
+              name: op-rbuilder-l2-genesis
+      restartPolicy: Always
+      volumes:
+        - hostPath:
+            path: /tmp/sceal/storage/jwtsecret
+          name: op-rbuilder-jwtsecret
+        - hostPath:
+            path: /tmp/sceal/storage/l2-genesis.json
+            type: File
+          name: op-rbuilder-l2-genesis
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    port.authrpc: "8551"
+    port.http: "8545"
+    port.metrics: "9090"
+    port.rpc: "30303"
+    service: op-rbuilder
+  labels:
+    l2.service: op-rbuilder
+  name: op-rbuilder
+spec:
+  ports:
+    - name: "8551"
+      port: 8551
+      targetPort: 8551
+    - name: "8545"
+      port: 8545
+      targetPort: 8545
+    - name: "9090"
+      port: 9090
+      targetPort: 9090
+    - name: "30303"
+      port: 30303
+      targetPort: 30303
+  selector:
+    l2.service: op-rbuilder

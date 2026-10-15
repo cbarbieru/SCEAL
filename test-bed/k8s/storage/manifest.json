@@ -1,0 +1,529 @@
+{
+	"session_id": "present-cricket",
+	"services": [
+		{
+			"name": "el",
+			"args": [
+				"node",
+				"--chain",
+				"/data/genesis.json",
+				"--datadir",
+				"/data_reth",
+				"--color",
+				"never",
+				"--addr",
+				"0.0.0.0",
+				"--port",
+				"{{Port \"rpc\" 30303}}",
+				"--ipcpath",
+				"/data_reth/reth.ipc",
+				"--http",
+				"--http.addr",
+				"0.0.0.0",
+				"--http.api",
+				"admin,eth,web3,net,rpc,mev,flashbots",
+				"--http.port",
+				"{{Port \"http\" 8545}}",
+				"--ws",
+				"--ws.addr",
+				"0.0.0.0",
+				"--ws.port",
+				"{{Port \"ws\" 8546}}",
+				"--ws.api",
+				"eth,web3,net,txpool,debug,trace",
+				"--ws.origins",
+				"*",
+				"--authrpc.port",
+				"{{Port \"authrpc\" 8551}}",
+				"--authrpc.addr",
+				"0.0.0.0",
+				"--authrpc.jwtsecret",
+				"/data/jwtsecret",
+				"--metrics",
+				"0.0.0.0:{{Port \"metrics\" 9090}}",
+				"--engine.persistence-threshold",
+				"0",
+				"--engine.memory-block-buffer-target",
+				"0",
+				"-vvv"
+			],
+			"labels": {
+				"health-check-sidecar": "el_healthmon"
+			},
+			"ports": [
+				{
+					"name": "rpc",
+					"port": 30303,
+					"Protocol": "tcp",
+					"HostPort": 0
+				},
+				{
+					"name": "http",
+					"port": 8545,
+					"Protocol": "tcp",
+					"HostPort": 0
+				},
+				{
+					"name": "ws",
+					"port": 8546,
+					"Protocol": "tcp",
+					"HostPort": 0
+				},
+				{
+					"name": "authrpc",
+					"port": 8551,
+					"Protocol": "tcp",
+					"HostPort": 0
+				},
+				{
+					"name": "metrics",
+					"port": 9090,
+					"Protocol": "tcp",
+					"HostPort": 0
+				}
+			],
+			"files_mapped": {
+				"/data/genesis.json": "genesis.json",
+				"/data/jwtsecret": "jwtsecret"
+			},
+			"volumes_mapped": {
+				"/data_reth": "data"
+			},
+			"tag": "v1.9.3",
+			"image": "ghcr.io/paradigmxyz/reth",
+			"entrypoint": "/usr/local/bin/reth"
+		},
+		{
+			"name": "el_healthmon",
+			"args": [
+				"--chain",
+				"execution",
+				"--url",
+				"{{Service \"el\" \"http\" \"http\" \"\"}}"
+			],
+			"ready_check": {
+				"query_url": "",
+				"test": [
+					"CMD",
+					"wget",
+					"--spider",
+					"--quiet",
+					"http://127.0.0.1:21171/ready"
+				],
+				"interval": 1000000000,
+				"start_period": 1000000000,
+				"timeout": 600000000000,
+				"retries": 20
+			},
+			"node_refs": [
+				{
+					"service": "el",
+					"port_label": "http",
+					"protocol": "http",
+					"user": ""
+				}
+			],
+			"tag": "cc6f172493d7ef6b88a5b7895f4b8619806c99f9",
+			"image": "docker.io/flashbots/playground-utils",
+			"entrypoint": "healthmon"
+		},
+		{
+			"name": "beacon",
+			"args": [
+				"bn",
+				"--datadir",
+				"/data_beacon",
+				"--testnet-dir",
+				"/data/testnet-dir",
+				"--enable-private-discovery",
+				"--disable-peer-scoring",
+				"--staking",
+				"--enr-address",
+				"127.0.0.1",
+				"--enr-udp-port",
+				"{{PortUDP \"p2p\" 9000}}",
+				"--enr-tcp-port",
+				"{{Port \"p2p\" 9000}}",
+				"--enr-quic-port",
+				"{{Port \"quic-p2p\" 9100}}",
+				"--port",
+				"{{Port \"p2p\" 9000}}",
+				"--quic-port",
+				"{{Port \"quic-p2p\" 9100}}",
+				"--http",
+				"--http-port",
+				"{{Port \"http\" 3500}}",
+				"--http-address",
+				"0.0.0.0",
+				"--http-allow-origin",
+				"*",
+				"--disable-packet-filter",
+				"--target-peers",
+				"0",
+				"--execution-endpoint",
+				"{{Service \"el\" \"authrpc\" \"http\" \"\"}}",
+				"--execution-jwt",
+				"/data/jwtsecret",
+				"--always-prepare-payload",
+				"--prepare-payload-lookahead",
+				"8000",
+				"--suggested-fee-recipient",
+				"0x690B9A9E9aa1C9dB991C7721a92d351Db4FaC990"
+			],
+			"labels": {
+				"health-check-sidecar": "beacon_healthmon"
+			},
+			"ports": [
+				{
+					"name": "p2p",
+					"port": 9000,
+					"Protocol": "udp",
+					"HostPort": 0
+				},
+				{
+					"name": "p2p",
+					"port": 9000,
+					"Protocol": "tcp",
+					"HostPort": 0
+				},
+				{
+					"name": "quic-p2p",
+					"port": 9100,
+					"Protocol": "tcp",
+					"HostPort": 0
+				},
+				{
+					"name": "http",
+					"port": 3500,
+					"Protocol": "tcp",
+					"HostPort": 0
+				}
+			],
+			"node_refs": [
+				{
+					"service": "el",
+					"port_label": "authrpc",
+					"protocol": "http",
+					"user": ""
+				}
+			],
+			"files_mapped": {
+				"/data/jwtsecret": "jwtsecret",
+				"/data/testnet-dir": "testnet"
+			},
+			"volumes_mapped": {
+				"/data_beacon": "data"
+			},
+			"tag": "v8.0.0-rc.2",
+			"image": "sigp/lighthouse",
+			"entrypoint": "lighthouse"
+		},
+		{
+			"name": "beacon_healthmon",
+			"args": [
+				"--chain",
+				"beacon",
+				"--url",
+				"{{Service \"beacon\" \"http\" \"http\" \"\"}}"
+			],
+			"ready_check": {
+				"query_url": "",
+				"test": [
+					"CMD",
+					"wget",
+					"--spider",
+					"--quiet",
+					"http://127.0.0.1:21171/ready"
+				],
+				"interval": 1000000000,
+				"start_period": 1000000000,
+				"timeout": 600000000000,
+				"retries": 20
+			},
+			"node_refs": [
+				{
+					"service": "beacon",
+					"port_label": "http",
+					"protocol": "http",
+					"user": ""
+				}
+			],
+			"tag": "cc6f172493d7ef6b88a5b7895f4b8619806c99f9",
+			"image": "docker.io/flashbots/playground-utils",
+			"entrypoint": "healthmon"
+		},
+		{
+			"name": "validator",
+			"args": [
+				"vc",
+				"--datadir",
+				"/data/validator",
+				"--testnet-dir",
+				"/data/testnet-dir",
+				"--init-slashing-protection",
+				"--beacon-nodes",
+				"{{Service \"beacon\" \"http\" \"http\" \"\"}}",
+				"--suggested-fee-recipient",
+				"0x690B9A9E9aa1C9dB991C7721a92d351Db4FaC990",
+				"--builder-proposals",
+				"--prefer-builder-proposals"
+			],
+			"node_refs": [
+				{
+					"service": "beacon",
+					"port_label": "http",
+					"protocol": "http",
+					"user": ""
+				}
+			],
+			"files_mapped": {
+				"/data/testnet-dir": "testnet",
+				"/data/validator": "data_validator"
+			},
+			"volumes_mapped": {
+				"/data/validator/validators/logs": "validator-logs"
+			},
+			"tag": "v8.0.0-rc.2",
+			"image": "sigp/lighthouse",
+			"entrypoint": "lighthouse"
+		},
+		{
+			"name": "op-geth",
+			"args": [
+				"-c",
+				"geth init --datadir /data_opgeth --state.scheme hash /data/l2-genesis.json \u0026\u0026 exec geth --datadir /data_opgeth --verbosity 3 --http --http.corsdomain \"*\" --http.vhosts \"*\" --http.addr 0.0.0.0 --http.port {{Port \"http\" 8545}} --http.api web3,debug,eth,txpool,net,engine,miner --ws --ws.addr 0.0.0.0 --ws.port {{Port \"ws\" 8546}} --ws.origins \"*\" --ws.api debug,eth,txpool,net,engine,miner --syncmode full --nodiscover --maxpeers 5 --rpc.allow-unprotected-txs --authrpc.addr 0.0.0.0 --authrpc.port {{Port \"authrpc\" 8551}} --authrpc.vhosts \"*\" --authrpc.jwtsecret /data/jwtsecret --gcmode archive --state.scheme hash --port {{Port \"rpc\" 30303}} --nodekey /data/p2p_key.txt --metrics --metrics.addr 0.0.0.0 --metrics.port {{Port \"metrics\" 6061}}"
+			],
+			"labels": {
+				"health-check-sidecar": "op-geth_healthmon",
+				"metrics_path": "/debug/metrics/prometheus"
+			},
+			"ports": [
+				{
+					"name": "http",
+					"port": 8545,
+					"Protocol": "tcp",
+					"HostPort": 0
+				},
+				{
+					"name": "ws",
+					"port": 8546,
+					"Protocol": "tcp",
+					"HostPort": 0
+				},
+				{
+					"name": "authrpc",
+					"port": 8551,
+					"Protocol": "tcp",
+					"HostPort": 0
+				},
+				{
+					"name": "rpc",
+					"port": 30303,
+					"Protocol": "tcp",
+					"HostPort": 0
+				},
+				{
+					"name": "metrics",
+					"port": 6061,
+					"Protocol": "tcp",
+					"HostPort": 0
+				}
+			],
+			"files_mapped": {
+				"/data/jwtsecret": "jwtsecret",
+				"/data/l2-genesis.json": "l2-genesis.json",
+				"/data/p2p_key.txt": "enode-key-1.txt"
+			},
+			"volumes_mapped": {
+				"/data_opgeth": "data"
+			},
+			"tag": "v1.101604.0",
+			"image": "us-docker.pkg.dev/oplabs-tools-artifacts/images/op-geth",
+			"entrypoint": "/bin/sh"
+		},
+		{
+			"name": "op-geth_healthmon",
+			"args": [
+				"--chain",
+				"execution",
+				"--url",
+				"{{Service \"op-geth\" \"http\" \"http\" \"\"}}"
+			],
+			"ready_check": {
+				"query_url": "",
+				"test": [
+					"CMD",
+					"wget",
+					"--spider",
+					"--quiet",
+					"http://127.0.0.1:21171/ready"
+				],
+				"interval": 1000000000,
+				"start_period": 1000000000,
+				"timeout": 600000000000,
+				"retries": 20
+			},
+			"node_refs": [
+				{
+					"service": "op-geth",
+					"port_label": "http",
+					"protocol": "http",
+					"user": ""
+				}
+			],
+			"tag": "cc6f172493d7ef6b88a5b7895f4b8619806c99f9",
+			"image": "docker.io/flashbots/playground-utils",
+			"entrypoint": "healthmon"
+		},
+		{
+			"name": "op-node",
+			"args": [
+				"--l1",
+				"{{Service \"el\" \"http\" \"http\" \"\"}}",
+				"--l1.beacon",
+				"{{Service \"beacon\" \"http\" \"http\" \"\"}}",
+				"--l1.epoch-poll-interval",
+				"12s",
+				"--l1.http-poll-interval",
+				"6s",
+				"--l2",
+				"{{Service \"op-geth\" \"authrpc\" \"http\" \"\"}}",
+				"--l2.jwt-secret",
+				"/data/jwtsecret",
+				"--metrics.enabled",
+				"--metrics.addr",
+				"0.0.0.0",
+				"--metrics.port",
+				"{{Port \"metrics\" 7300}}",
+				"--sequencer.enabled",
+				"--sequencer.l1-confs",
+				"0",
+				"--verifier.l1-confs",
+				"0",
+				"--p2p.sequencer.key",
+				"8b3a350cf5c34c9194ca85829a2df0ec3153be0318b5e2d3348e872092edffba",
+				"--rollup.config",
+				"/data/rollup.json",
+				"--rollup.l1-chain-config",
+				"/data/genesis.json",
+				"--rpc.addr",
+				"0.0.0.0",
+				"--rpc.port",
+				"{{Port \"http\" 8549}}",
+				"--p2p.listen.ip",
+				"0.0.0.0",
+				"--p2p.listen.tcp",
+				"{{Port \"p2p\" 9003}}",
+				"--p2p.listen.udp",
+				"{{PortUDP \"p2p\" 9003}}",
+				"--p2p.scoring.peers",
+				"light",
+				"--p2p.ban.peers",
+				"true",
+				"--pprof.enabled",
+				"--rpc.enable-admin",
+				"--safedb.path",
+				"/data_db"
+			],
+			"env": {
+				"A": "B"
+			},
+			"ports": [
+				{
+					"name": "metrics",
+					"port": 7300,
+					"Protocol": "tcp",
+					"HostPort": 0
+				},
+				{
+					"name": "http",
+					"port": 8549,
+					"Protocol": "tcp",
+					"HostPort": 0
+				},
+				{
+					"name": "p2p",
+					"port": 9003,
+					"Protocol": "tcp",
+					"HostPort": 0
+				},
+				{
+					"name": "p2p",
+					"port": 9003,
+					"Protocol": "udp",
+					"HostPort": 0
+				}
+			],
+			"node_refs": [
+				{
+					"service": "el",
+					"port_label": "http",
+					"protocol": "http",
+					"user": ""
+				},
+				{
+					"service": "beacon",
+					"port_label": "http",
+					"protocol": "http",
+					"user": ""
+				},
+				{
+					"service": "op-geth",
+					"port_label": "authrpc",
+					"protocol": "http",
+					"user": ""
+				}
+			],
+			"files_mapped": {
+				"/data/genesis.json": "genesis.json",
+				"/data/jwtsecret": "jwtsecret",
+				"/data/rollup.json": "rollup.json"
+			},
+			"volumes_mapped": {
+				"/data_db": "data"
+			},
+			"tag": "v1.16.3",
+			"image": "us-docker.pkg.dev/oplabs-tools-artifacts/images/op-node",
+			"entrypoint": "op-node"
+		},
+		{
+			"name": "op-batcher",
+			"args": [
+				"--l1-eth-rpc",
+				"{{Service \"el\" \"http\" \"http\" \"\"}}",
+				"--l2-eth-rpc",
+				"{{Service \"op-geth\" \"http\" \"http\" \"\"}}",
+				"--rollup-rpc",
+				"{{Service \"op-node\" \"http\" \"http\" \"\"}}",
+				"--max-channel-duration=2",
+				"--sub-safety-margin=4",
+				"--poll-interval=1s",
+				"--num-confirmations=1",
+				"--private-key=0x2a871d0798f97d79848a013d4936a73bf4cc922c825d33c1cf7073dff6d409c6"
+			],
+			"node_refs": [
+				{
+					"service": "el",
+					"port_label": "http",
+					"protocol": "http",
+					"user": ""
+				},
+				{
+					"service": "op-geth",
+					"port_label": "http",
+					"protocol": "http",
+					"user": ""
+				},
+				{
+					"service": "op-node",
+					"port_label": "http",
+					"protocol": "http",
+					"user": ""
+				}
+			],
+			"tag": "v1.16.3",
+			"image": "us-docker.pkg.dev/oplabs-tools-artifacts/images/op-batcher",
+			"entrypoint": "op-batcher"
+		}
+	]
+}

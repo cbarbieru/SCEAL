@@ -1,0 +1,64 @@
+# Minimal SGX test bed: the tx-order-guarantor (TOG) enclave, wired to
+# op-rbuilder, plus tog-client as a one-shot smoke-test client.
+#
+# This uses tog-enclave's DEV build (Dockerfile.enclave-dev — a plain process,
+# no SGX hardware, plaintext, no attestation). For the real SGX-backed image
+# (Dockerfile.enclave, needs an SGX2 host + /dev/sgx_enclave) see
+# tx-order-guarantor/README.md ("Build & run" / "Docker").
+#
+# Usage:
+#   docker compose up -d --build tog-enclave op-rbuilder
+#   docker compose run --rm tog-client demo
+#   docker compose down
+#
+# See test-cases/smoke-order-guarantor at the repo root for a scripted version of
+# the above.
+
+services:
+  tog-enclave:
+    build:
+      context: ./tx-order-guarantor
+      dockerfile: Dockerfile.enclave-dev
+    ports:
+      - "1546:1546" # submit (send_raw_transaction)
+      - "1547:1547" # read (get_raw / get_best / get_public_key)
+
+  op-rbuilder:
+    build:
+      context: ./op-rbuilder
+      dockerfile: Dockerfile
+      target: rbuilder-runtime
+      args:
+        RBUILDER_BIN: op-rbuilder
+    depends_on:
+      - tog-enclave
+    ports:
+      - "8545:8545" # http
+      - "8551:8551" # authrpc
+    volumes:
+      # Reuses the genesis/jwt already generated for the k8s test bed so this
+      # compose doesn't need its own copy — see ../k8s/storage.
+      - ../k8s/storage/jwtsecret:/data/jwtsecret:ro
+      - ../k8s/storage/l2-genesis.json:/data/l2-genesis.json:ro
+    command:
+      - node
+      - --chain=/data/l2-genesis.json
+      - --datadir=/data_op_reth
+      - --http
+      - --http.addr=0.0.0.0
+      - --http.port=8545
+      - --authrpc.addr=0.0.0.0
+      - --authrpc.port=8551
+      - --authrpc.jwtsecret=/data/jwtsecret
+      - --tx-order-guarantor.addr=tog-enclave:1547
+
+  # One-shot client, not a long-running service — run explicitly:
+  #   docker compose run --rm tog-client demo
+  tog-client:
+    build:
+      context: ./tx-order-guarantor
+      dockerfile: Dockerfile.client
+    depends_on:
+      - tog-enclave
+    entrypoint: ["tog-client", "--submit", "tog-enclave:1546", "--read", "tog-enclave:1547"]
+    command: ["demo"]

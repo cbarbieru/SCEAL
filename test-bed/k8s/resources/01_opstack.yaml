@@ -1,0 +1,656 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    service: beacon
+  labels:
+    l1.service: beacon
+  name: beacon
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      l1.service: beacon
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        service: beacon
+      labels:
+        l1.service: beacon
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                  - MAIN_NODE
+      containers:
+        - name: beacon
+          image:
+            sigp/lighthouse:v7.0.0-beta.0
+          command:
+            - lighthouse
+          args:
+            - bn
+            - --datadir
+            - /data_beacon
+            - --testnet-dir
+            - /data/testnet-dir
+            - --enable-private-discovery
+            - --disable-peer-scoring
+            - --staking
+            - --enr-address
+            - 127.0.0.1
+            - --enr-udp-port
+            - "9000"
+            - --enr-tcp-port
+            - "9000"
+            - --enr-quic-port
+            - "9100"
+            - --port
+            - "9000"
+            - --quic-port
+            - "9100"
+            - --http
+            - --http-port
+            - "3500"
+            - --http-address
+            - 0.0.0.0
+            - --http-allow-origin
+            - '*'
+            - --disable-packet-filter
+            - --target-peers
+            - "0"
+            - --execution-endpoint
+            - http://el:8551
+            - --execution-jwt
+            - /data/jwtsecret
+            - --always-prepare-payload
+            - --prepare-payload-lookahead
+            - "8000"
+            - --suggested-fee-recipient
+            - 0x690B9A9E9aa1C9dB991C7721a92d351Db4FaC990
+            - --builder
+            - http://mev-boost:5555
+            - --builder-fallback-epochs-since-finalization
+            - "0"
+            - --builder-fallback-disable-checks
+          livenessProbe:
+            failureThreshold: 3
+            initialDelaySeconds: 1
+            periodSeconds: 1
+            timeoutSeconds: 30
+            exec:
+              command:
+                - chmod +x /artifacts/scripts/query.sh && /artifacts/scripts/query.sh http://localhost:3500/eth/v1/node/syncing
+          ports:
+            - containerPort: 9000
+              protocol: UDP
+            - containerPort: 9000
+              protocol: TCP
+            - containerPort: 9100
+              protocol: TCP
+            - containerPort: 3500
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /data/jwtsecret
+              name: beacon-jwtsecret
+            - mountPath: /data/testnet-dir
+              name: beacon-testnet
+            - mountPath: /artifacts
+              name: beacon-artifacts
+      restartPolicy: Always
+      volumes:
+        - hostPath:
+            path: /tmp/sceal/storage/jwtsecret
+            type: File
+          name: beacon-jwtsecret
+        - hostPath:
+            path: /tmp/sceal/storage/testnet
+          name: beacon-testnet
+        - hostPath:
+            path: /tmp/sceal/storage
+          name: beacon-artifacts
+        
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    service: beacon
+  labels:
+    l1.service: beacon
+  name: beacon
+spec:
+  ports:
+    - name: "udp-9000"
+      port: 9000
+      protocol: UDP
+      targetPort: 9000
+    - name: "tcp-9000"
+      port: 9000
+      protocol: TCP
+      targetPort: 9000
+    - name: "9100"
+      port: 9100
+      targetPort: 9100
+    - name: "3500"
+      port: 3500
+      targetPort: 3500
+  selector:
+    l1.service: beacon
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    service: el
+  labels:
+    l1.service: el
+  name: el
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      l1.service: el
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        service: el
+      labels:
+        l1.service: el
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                  - MAIN_NODE
+      containers:
+        - name: el
+          image: ghcr.io/paradigmxyz/reth:v1.4.8
+          command:
+            - /usr/local/bin/reth
+          args:
+            - node
+            - --chain
+            - /data/genesis.json
+            - --datadir
+            - /data_reth
+            - --color
+            - never
+            - --ipcpath
+            - /data_reth/reth.ipc
+            - --addr
+            - 127.0.0.1
+            - --port
+            - "30303"
+            - --http
+            - --http.addr
+            - 0.0.0.0
+            - --http.api
+            - admin,eth,web3,net,rpc,mev,flashbots
+            - --http.port
+            - "8545"
+            - --ws
+            - --ws.addr
+            - 0.0.0.0
+            - --ws.port
+            - "8546"
+            - --ws.api
+            - eth,web3,net,txpool,debug,trace
+            - --ws.origins
+            - '*'
+            - --authrpc.port
+            - "8551"
+            - --authrpc.addr
+            - 0.0.0.0
+            - --authrpc.jwtsecret
+            - /data/jwtsecret
+            - --metrics
+            - 0.0.0.0:9090
+            - --engine.persistence-threshold
+            - "0"
+            - --engine.memory-block-buffer-target
+            - "0"
+            - -vvv
+          ports:
+            - containerPort: 30303
+            - containerPort: 8545
+            - containerPort: 8546
+            - containerPort: 8551
+            - containerPort: 9090
+          volumeMounts:
+              - mountPath: /data/genesis.json
+                name: el-genesis
+              - mountPath: /data/jwtsecret
+                name: el-jwtsecret
+      restartPolicy: Always
+      volumes:
+        - hostPath:
+            path: /tmp/sceal/storage/genesis.json
+            type: File
+          name: el-genesis
+        - hostPath:
+            path: /tmp/sceal/storage/jwtsecret
+            type: File
+          name: el-jwtsecret
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    l1.service: el
+  name: el
+spec:
+  ports:
+    - name: "30303"
+      port: 30303
+      targetPort: 30303
+    - name: "8545"
+      port: 8545
+      targetPort: 8545
+    - name: "8546"
+      port: 8546
+      targetPort: 8546
+    - name: "8551"
+      port: 8551
+      targetPort: 8551
+    - name: "9090"
+      port: 9090
+      targetPort: 9090
+  selector:
+    l1.service: el
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    service: op-batcher
+  labels:
+    l2.service: op-batcher
+  name: op-batcher
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      l2.service: op-batcher
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        service: op-batcher
+      labels:
+        l2.service: op-batcher
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                  - MAIN_NODE
+      containers:
+        - args:
+            - --l1-eth-rpc
+            - http://el:8545
+            - --l2-eth-rpc
+            - http://op-geth:8545
+            - --rollup-rpc
+            - http://op-node:8549
+            - --max-channel-duration=2
+            - --sub-safety-margin=4
+            - --poll-interval=1s
+            - --num-confirmations=1
+            - --private-key=0x2a871d0798f97d79848a013d4936a73bf4cc922c825d33c1cf7073dff6d409c6
+          command:
+            - op-batcher
+          image: us-docker.pkg.dev/oplabs-tools-artifacts/images/op-batcher:v1.12.0-rc.1
+          name: op-batcher
+      restartPolicy: Always
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    port.authrpc: "8551"
+    port.http: "8545"
+    port.metrics: "9090"
+    port.rpc: "30303"
+    port.ws: "8546"
+    service: op-geth
+  labels:
+    l2.service: op-geth
+  name: op-geth
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      l2.service: op-geth
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        port.authrpc: "8551"
+        port.http: "8545"
+        port.metrics: "9090"
+        port.rpc: "30303"
+        port.ws: "8546"
+        service: op-geth
+      labels:
+        l2.service: op-geth
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                  - MAIN_NODE
+      containers:
+        - args:
+            - -c
+            - geth init --datadir /data_opgeth --state.scheme hash /data/l2-genesis.json && exec geth --datadir /data_opgeth --verbosity 3 --http --http.corsdomain "*" --http.vhosts "*" --http.addr 0.0.0.0 --http.port 8545 --http.api web3,debug,eth,txpool,net,engine,miner --ws --ws.addr 0.0.0.0 --ws.port 8546 --ws.origins "*" --ws.api debug,eth,txpool,net,engine,miner --syncmode full --nodiscover --maxpeers 5 --rpc.allow-unprotected-txs --authrpc.addr 0.0.0.0 --authrpc.port 8551 --authrpc.vhosts "*" --authrpc.jwtsecret /data/jwtsecret --gcmode archive --state.scheme hash --port 30303 --nodekey /data/enode-key-1.txt --metrics --metrics.addr 0.0.0.0 --metrics.port 9090
+          command:
+            - /bin/sh
+          image: us-docker.pkg.dev/oplabs-tools-artifacts/images/op-geth:v1.101503.2-rc.5
+          name: op-geth
+          ports:
+            - containerPort: 8545
+              protocol: TCP
+            - containerPort: 8546
+              protocol: TCP
+            - containerPort: 8551
+              protocol: TCP
+            - containerPort: 30303
+              protocol: TCP
+            - containerPort: 9090
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /data/l2-genesis.json
+              name: op-geth-l2-genesis
+            - mountPath: /data/jwtsecret
+              name: op-geth-jwtsecret
+            - mountPath: /data/enode-key-1.txt
+              name: op-geth-enode-key
+      restartPolicy: Always
+      volumes:
+        - hostPath:
+            path: /tmp/sceal/storage/l2-genesis.json
+            type: File
+          name: op-geth-l2-genesis
+        - hostPath:
+            path: /tmp/sceal/storage/jwtsecret
+            type: File
+          name: op-geth-jwtsecret
+        - hostPath:
+            path: /tmp/sceal/storage/enode-key-1.txt
+            type: File
+          name: op-geth-enode-key
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    port.authrpc: "8551"
+    port.http: "8545"
+    port.metrics: "9090"
+    port.rpc: "30303"
+    port.ws: "8546"
+    service: op-geth
+  labels:
+    l2.service: op-geth
+  name: op-geth
+spec:
+  ports:
+    - name: "8545"
+      port: 8545
+      targetPort: 8545
+    - name: "8546"
+      port: 8546
+      targetPort: 8546
+    - name: "8551"
+      port: 8551
+      targetPort: 8551
+    - name: "30303"
+      port: 30303
+      targetPort: 30303
+    - name: "9090"
+      port: 9090
+      targetPort: 9090
+  selector:
+    l2.service: op-geth
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    port.http: "8549"
+    port.metrics: "7300"
+    port.p2p: "9003"
+    service: op-node
+  labels:
+    l2.service: op-node
+  name: op-node
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      l2.service: op-node
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        port.http: "8549"
+        port.metrics: "7300"
+        port.p2p: "9003"
+        service: op-node
+      labels:
+        l2.service: op-node
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                  - MAIN_NODE
+      containers:
+        - args:
+            - --l1
+            - http://el:8545
+            - --l1.beacon
+            - http://beacon:3500
+            - --l1.epoch-poll-interval
+            - 12s
+            - --l1.http-poll-interval
+            - 6s
+            - --l2
+            - L2_URL
+            - --l2.jwt-secret
+            - /data/jwtsecret
+            - --sequencer.enabled
+            - --sequencer.l1-confs
+            - "0"
+            - --verifier.l1-confs
+            - "0"
+            - --p2p.sequencer.key
+            - 8b3a350cf5c34c9194ca85829a2df0ec3153be0318b5e2d3348e872092edffba
+            - --rollup.config
+            - /data/rollup.json
+            - --rpc.addr
+            - 0.0.0.0
+            - --rpc.port
+            - "8549"
+            - --p2p.listen.ip
+            - 0.0.0.0
+            - --p2p.listen.tcp
+            - "9003"
+            - --p2p.listen.udp
+            - "9003"
+            - --p2p.scoring.peers
+            - light
+            - --p2p.ban.peers
+            - "true"
+            - --metrics.enabled
+            - --metrics.addr
+            - 0.0.0.0
+            - --metrics.port
+            - "7300"
+            - --pprof.enabled
+            - --rpc.enable-admin
+            - --safedb.path
+            - /data_db
+          command:
+            - op-node
+          env:
+            - name: A
+              value: B
+          image: us-docker.pkg.dev/oplabs-tools-artifacts/images/op-node:v1.13.0-rc.1
+          name: op-node
+          ports:
+            - containerPort: 8549
+              protocol: TCP
+            - containerPort: 9003
+              protocol: TCP
+            - containerPort: 9003
+              protocol: UDP
+            - containerPort: 7300
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /data/jwtsecret
+              name: op-node-jwtsecret
+            - mountPath: /data/rollup.json
+              name: op-node-rollup
+      restartPolicy: Always
+      volumes:
+        - hostPath:
+            path: /tmp/sceal/storage/jwtsecret
+            type: File
+          name: op-node-jwtsecret
+        - hostPath:
+            path: /tmp/sceal/storage/rollup.json
+            type: File
+          name: op-node-rollup
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    port.http: "8549"
+    port.metrics: "7300"
+    port.p2p: "9003"
+    service: op-node
+  labels:
+    l2.service: op-node
+  name: op-node
+spec:
+  ports:
+    - name: "8549"
+      port: 8549
+      targetPort: 8549
+    - name: "tcp-9003"
+      port: 9003
+      protocol: TCP
+      targetPort: 9003
+    - name: "udp-9003"
+      port: 9003
+      protocol: UDP
+      targetPort: 9003
+    - name: "7300"
+      port: 7300
+      targetPort: 7300
+  selector:
+    l2.service: op-node
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    service: validator
+  labels:
+    l1.service: validator
+  name: validator
+spec:
+  replicas: 1
+  selector:
+    matchLabels: 
+      l1.service: validator
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        service: validator
+      labels:
+        l1.service: validator
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                  - MAIN_NODE
+      containers:
+        - name: validator
+          image: 
+            sigp/lighthouse:v7.0.0-beta.0
+          command:
+            - lighthouse
+          args:
+            - vc
+            - --datadir
+            - /data/validator
+            - --testnet-dir
+            - /data/testnet-dir
+            - --init-slashing-protection
+            - --beacon-nodes
+            - http://beacon:3500
+            - --suggested-fee-recipient
+            - 0x690B9A9E9aa1C9dB991C7721a92d351Db4FaC990
+            - --builder-proposals
+            - --prefer-builder-proposals
+          volumeMounts:
+            - mountPath: /data/testnet-dir
+              name: validator-testnet
+            - mountPath: /data/validator
+              name: validator-secrets
+      restartPolicy: Always
+      volumes:
+        - hostPath:
+            path: /tmp/sceal/storage/testnet
+          name: validator-testnet
+        - hostPath:
+            path: /tmp/sceal/storage/data_validator
+          name: validator-secrets

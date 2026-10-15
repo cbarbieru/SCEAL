@@ -1,0 +1,6 @@
+[submodule "test-bed/builder-playground"]
+	path = test-bed/builder-playground
+	url = git@github.com:cbarbieru/builder-playground.git
+[submodule "test-bed/sgx/op-rbuilder"]
+	path = test-bed/sgx/op-rbuilder
+	url = git@github.com:cbarbieru/op-rbuilder.git

@@ -1,0 +1,18 @@
+# syntax=docker/dockerfile:1
+#
+# Plain build of tog-client — the test/reference client for the tog-enclave
+# (see README.md). Stable Rust, normal host target: no SGX/Fortanix toolchain
+# needed, same as Dockerfile.enclave-dev. Used by ../docker-compose.yml and by
+# testing/smoke-order-guarantor at the repo root.
+#
+#   docker build -f Dockerfile.client -t tog-client .
+#   docker run --rm --network host tog-client --read 127.0.0.1:1547 get-best
+
+FROM rust:1-bookworm AS build
+WORKDIR /src
+COPY . .
+RUN cargo build --release -p tog-client
+
+FROM debian:bookworm-slim AS runtime
+COPY --from=build /src/target/release/tog-client /usr/local/bin/tog-client
+ENTRYPOINT ["tog-client"]

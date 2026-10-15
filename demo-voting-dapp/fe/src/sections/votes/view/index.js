@@ -1,0 +1,1 @@
+export { default as VotesView } from './votes-view';

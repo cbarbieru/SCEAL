@@ -1,0 +1,31 @@
+[package]
+name = "tog-client"
+version = "0.1.0"
+edition = "2024"
+
+# A test/reference client for the enclave. Talks plaintext to the read endpoint
+# and (default) plaintext to the submit endpoint; `--features tls` makes the
+# submit connection TLS (mbedtls, cert NOT verified — stub). Verifies the signed
+# ordering via `tog-core`.
+[features]
+tls = ["dep:mbedtls"]
+
+[dependencies]
+tog-proto = { path = "../tog-proto" }
+tog-core = { path = "../tog-core" }   # verify_ordering (signed get_best)
+hex = { version = "0.4", default-features = false, features = ["alloc"] }
+
+# Used to synthesize sample signed transactions for `demo` / testing.
+alloy-primitives = { version = "1.0.23", default-features = false }
+alloy-consensus = { version = "1.0.23", default-features = false, features = ["k256"] }
+alloy-eips = { version = "1.0.23", default-features = false }
+alloy-signer = "1.0.23"
+alloy-signer-local = "1.0.23"
+
+# Optional TLS submit connector. From git `main` (the crates.io 0.12.5 uses the
+# removed `doc_auto_cfg` nightly feature and won't compile; main uses `doc_cfg`).
+mbedtls = { git = "https://github.com/fortanix/rust-mbedtls", optional = true, features = ["ssl"] }
+
+[[bin]]
+name = "tog-client"
+path = "src/main.rs"

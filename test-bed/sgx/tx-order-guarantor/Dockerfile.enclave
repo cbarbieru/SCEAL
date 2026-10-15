@@ -1,0 +1,86 @@
+# syntax=docker/dockerfile:1
+#
+# SGX image for the tog-enclave (Fortanix EDP).
+#
+# The submit endpoint (:1546) terminates TLS inside the enclave with a SELF-SIGNED
+# cert (the client does not verify it yet — stub, not real RA-TLS). The read
+# endpoint (:1547) is plaintext and signs `get_best` with a key generated at load
+# (exposed via `get_public_key`), so a builder verifies the ordering without TLS.
+# No Enclave Manager, no AESM. It runs in a REAL enclave (the runtime needs the
+# kernel SGX driver). EDP enclaves do NOT inherit the container env, so config is
+# baked into the build.
+#
+# The TLS build compiles mbedtls, whose bundled C is cross-compiled for the SGX
+# target — hence clang + cmake (installed below) and the glibc multiarch include
+# path (set below, so clang finds `bits/libc-header-start.h`).
+#
+# This is a STARTING POINT — iterate on your Linux SGX box. It cannot be built or
+# run on an Apple-Silicon Mac (no SGX, ARM CPU). Build/run on an SGX2 host
+# (e.g. Azure DCsv3/DCdsv3).
+#
+#   docker build -f Dockerfile.enclave -t tog-enclave .
+#   docker run --rm --device /dev/sgx_enclave -p 1546:1546 -p 1547:1547 tog-enclave
+#   # then, from the same host:  cargo run -p tog-client --features tls -- demo
+
+# ── Stage 1: build the enclave + convert/sign it ────────────────────────────
+# Fortanix EDP requires Rust nightly (the base image's default toolchain).
+FROM rustlang/rust:nightly-bookworm AS build
+
+# Build deps: Fortanix tools (aesm-client → protobuf; openssl for signing) and the
+# mbedtls C build (cmake + clang).
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        build-essential cmake clang pkg-config libssl-dev protobuf-compiler \
+    && rm -rf /var/lib/apt/lists/*
+
+# Fortanix EDP toolchain + the SGX target std.
+RUN rustup target add x86_64-fortanix-unknown-sgx \
+    && cargo install fortanix-sgx-tools sgxs-tools
+
+WORKDIR /src
+COPY . .
+
+# mbedtls-sys cross-compiles its C for the SGX triple; clang omits Debian's glibc
+# multiarch include dir, so `bits/libc-header-start.h` (in
+# /usr/include/x86_64-linux-gnu/bits/) isn't found. Point the C build + bindgen at it.
+ENV CPATH=/usr/include/x86_64-linux-gnu \
+    BINDGEN_EXTRA_CLANG_ARGS=-I/usr/include/x86_64-linux-gnu
+
+# Build the enclave for the SGX target with the TLS submit endpoint (mbedtls is
+# compiled into the .sgxs; the read endpoint stays plaintext).
+RUN cargo build --release -p tog-enclave --target x86_64-fortanix-unknown-sgx --features tls
+
+# Convert ELF -> .sgxs using the layout from Cargo.toml's fortanix-sgx metadata.
+RUN ftxsgx-elf2sgxs \
+        target/x86_64-fortanix-unknown-sgx/release/tog-enclave \
+        --heap-size 2147483648 --stack-size 262144 --threads 16 --debug \
+        --output /tog-enclave.sgxs
+
+# Dev signing key — DO NOT ship this throwaway key; sign with your own for prod.
+# SGX requires a 3072-bit RSA key with public exponent 3.
+RUN openssl genrsa -3 -out /signing-key.pem 3072 \
+    && sgxs-sign --key /signing-key.pem /tog-enclave.sgxs /tog-enclave.sig
+
+# ── Stage 2: slim runtime (just the Fortanix runner) ────────────────────────
+# debian-slim (~30 MB) keeps a shell, so during bring-up you can `docker exec`
+# in to diagnose enclave-load issues. The runner loads the enclave via
+# /dev/sgx_enclave directly — no Intel PSW/libsgx/AESM needed (FLC launch, no
+# quotes generated), which drops the bulk of the old 135 MB. mbedtls is compiled
+# into the .sgxs, so the TLS submit endpoint needs nothing extra at runtime.
+# ftxsgx-runner is dynamically linked against bookworm's OpenSSL 3, so it needs
+# libssl.so.3 at runtime (same bookworm base → ABI-compatible). If the runner
+# still reports another missing .so, `ldd /usr/local/bin/ftxsgx-runner` inside
+# and apt-get that lib.
+FROM debian:bookworm-slim AS runtime
+
+RUN apt-get update && apt-get install -y --no-install-recommends libssl3 \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY --from=build /usr/local/cargo/bin/ftxsgx-runner /usr/local/bin/ftxsgx-runner
+COPY --from=build /tog-enclave.sgxs /tog-enclave.sgxs
+COPY --from=build /tog-enclave.sig  /tog-enclave.sig
+
+EXPOSE 1546 1547
+# Pass /dev/sgx_enclave in and publish :1546 (submit) + :1547 (read). On FLC
+# hardware (which EDP requires) no AESM is needed to launch. The ordering key is
+# generated at load; config is baked in (EDP enclaves don't read the env).
+ENTRYPOINT ["ftxsgx-runner", "/tog-enclave.sgxs"]

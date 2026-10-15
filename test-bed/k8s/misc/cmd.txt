@@ -1,0 +1,23 @@
+cd builder-playground-opstack-k8s/scripts
+git pull -p
+chmod +x *
+./cleanup-state.sh
+ls -al /tmp/sceal/storage/
+
+sudo ./setup-metrics.sh /tmp/sceal/contender/reports/pod_metrics.csv
+
+sudo rm -rf /tmp/sceal/contender/reports
+
+ssh -J cbarbieru@rosablanche-1.maas -L 3000:localhost:3000 -L 9090:localhost:9090 ubuntu@192.168.122.58
+nohup sudo k3s kubectl port-forward -n metrics svc/prometheus 9090:9090 --address 0.0.0.0 > pfp.log 2>&1 &
+nohup sudo k3s kubectl port-forward -n metrics svc/grafana 3000:3000 --address 0.0.0.0 > gf.log 2>&1 &
+nohup sudo k3s kubectl port-forward svc/op-geth 8545:8545 --address 0.0.0.0 > bl.log 2>&1 &
+nohup sudo k3s kubectl port-forward -n testing svc/online-voting-fe 3030:3030 --address 0.0.0.0 > pfo.log 2>&1 &
+
+
+docker run -p 80:80 -e APP_NODE_URL="http://localhost:8545" alethio/ethereum-lite-explorer
+
+ssh -J cbarbieru@rosablanche-1.maas -L 8545:localhost:8545 ubuntu@192.168.122.74
+ssh -J cbarbieru@rosablanche-1.maas ubuntu@192.168.122.170
+
+virsh net-dhcp-leases default
